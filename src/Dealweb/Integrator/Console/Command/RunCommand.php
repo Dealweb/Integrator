@@ -1,0 +1,64 @@
+<?php
+namespace Dealweb\Integrator\Console\Command;
+
+use Dealweb\Integrator\Destination\DestinationFactory;
+use Dealweb\Integrator\Source\SourceFactory;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\TableStyle;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Dealweb\Integrator\Console\AbstractDealwebCommand;
+use Symfony\Component\Yaml\Yaml;
+
+class RunCommand extends AbstractDealwebCommand
+{
+    protected function configure()
+    {
+        $this->setName('run');
+        $this->setDescription('Dealweb integrator tool');
+
+        $this->addOption('layout-file', null, InputOption::VALUE_REQUIRED, 'Layout file with integration details');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $layoutFilePath = $input->getOption('layout-file');
+        if (! file_exists($layoutFilePath)) {
+            return 1;
+        }
+
+        $layoutConfig = Yaml::parse(file_get_contents($layoutFilePath));
+
+        $source = SourceFactory::create($layoutConfig['source']['type']);
+        $destination = DestinationFactory::create($layoutConfig['destination']['type']);
+
+        $this->output->writeln(sprintf(
+            'Starting integration with source "%s" and destination "%s"',
+            $layoutConfig['source']['type'],
+            $layoutConfig['destination']['type']
+        ));
+
+        $count = 0;
+        $errorCount = 0;
+        foreach ($source->process($layoutConfig['source']) as $fieldValues) {
+            $count++;
+            $this->startProcess(sprintf('Processing record number: %s', $count));
+            if ($fieldValues === false) {
+                continue;
+            }
+
+            $success = $destination->batchWrite($layoutConfig['destination'], $fieldValues);
+            $this->endProcess($success);
+            if (! $success) {
+                $errorCount++;
+            }
+        }
+
+        $this->output->writeln('');
+        $this->output->writeln(sprintf('Finished! %s record(s) processed, %s process failed', $count, $errorCount));
+
+        return 0;
+    }
+}

@@ -1,0 +1,99 @@
+source: 
+  type: fixedWidthFile
+  filePath: ../Integration/products.txt
+  ignoreFirstLine: true
+  fieldMapping:
+    productCode: 
+      position: [1, 7]
+    productName:
+      position: [71, 50]
+    normalPrice:
+      position: [592, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+    specialPrice: 
+      position: [604, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+    quantity: 
+      position: [616, 11]
+      type: number
+      decimalPlaces: 3
+      divisionBy: 1000
+    quantitySign:
+      position: [626, 1]
+    costPrice: 
+      position: [652, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+  condition:
+    notValidIf:
+      quantitySign: "-"
+
+destination:
+  type: restApi
+  authorization:
+    serviceUrl: "https://api.dealweb.com.br/rest/v1/auth"
+    httpMethod: POST
+    expectedStatusCode: 200
+    headers:
+      Content-Type: "application/vnd.api+json"
+    bodyType: json
+    body:
+      email: api@dealweb.com.br
+      password: abc123
+    return:
+      accessToken: "$.meta.accessData.token"
+  services:
+    get-product-id:
+      serviceUrl: "https://api.dealweb.com.br/rest/v1/products?filter[options.code]={productCode}"
+      httpMethod: GET
+      expectedStatusCode: 200
+      headers:
+        Authorization: "Bearer {accessToken}"
+        Content-Type: "application/vnd.api+json"
+      return:
+        productId: "$.data[0].id"
+    update-product:
+      serviceUrl: "https://api.dealweb.com.br/rest/v1/products/{productId}"
+      httpMethod: PATCH
+      expectedStatusCode: 200
+      headers:
+        Authorization: "Bearer {accessToken}"
+        Content-Type: "application/vnd.api+json"
+      bodyType: json
+      body:
+        data:
+          type: Product
+          id: "{productId}"
+          attributes:
+            name: "{productName}"
+            costPrice: "{costPrice}"
+            normalPrice: "{normalPrice}"
+            specialPrice: "{specialPrice}"
+    get-product-stock-id:
+      serviceUrl: "https://api.dealweb.com.br/rest/v1/products-stocks?filter[productCode]={productCode}"
+      httpMethod: GET
+      expectedStatusCode: 200
+      headers:
+        Authorization: "Bearer {accessToken}"
+        Content-Type: "application/vnd.api+json"
+      return:
+        productStockId: "$.data[0].id"
+    update-product-stock:
+      serviceUrl: "https://api.dealweb.com.br/rest/v1/products-stocks/{productStockId}"
+      httpMethod: PATCH
+      expectedStatusCode: 200
+      headers:
+        Authorization: "Bearer {accessToken}"
+        Content-Type: "application/vnd.api+json"
+      bodyType: json
+      body:
+        data:
+          type: ProductStock
+          id: "{productId}"
+          attributes:
+            quantity: "{quantity}"

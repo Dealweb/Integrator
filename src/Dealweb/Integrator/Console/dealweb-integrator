@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+use Dealweb\Integrator\Console\Command\RunCommand;
+
+define('ROOT_DIR', realpath(sprintf('%s/../../../../', __DIR__)));
+
+include_once ROOT_DIR . "/vendor/autoload.php";
+
+$application = new \Symfony\Component\Console\Application('dealweb-integrator', 'v0.1.0');
+
+$application->add(new RunCommand());
+
+$application->run();

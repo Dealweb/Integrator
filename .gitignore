@@ -1,0 +1,5 @@
+.idea
+*.iws
+composer.phar
+composer.lock
+/vendor/
