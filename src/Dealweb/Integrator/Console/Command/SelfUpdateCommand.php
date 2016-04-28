@@ -26,7 +26,7 @@ class SelfUpdateCommand extends AbstractDealwebCommand
         $pharUrl = 'https://dealweb.github.io/integrator/dealweb-integrator.phar';
         $versionFileUrl = 'https://dealweb.github.io/integrator/dealweb-integrator.phar';
 
-        $updater = new Updater();
+        $updater = new Updater(null, false);
         $updater->getStrategy()->setPharUrl($pharUrl);
         $updater->getStrategy()->setVersionUrl($versionFileUrl);
 

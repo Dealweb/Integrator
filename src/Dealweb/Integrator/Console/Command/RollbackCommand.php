@@ -23,7 +23,7 @@ class SelfUpdateCommand extends AbstractDealwebCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $updater = new Updater();
+        $updater = new Updater(null, false);
 
         try {
             $result = $updater->rollback();
