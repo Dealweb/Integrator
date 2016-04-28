@@ -5,7 +5,7 @@ use Dealweb\Integrator\Source\SourceInterface;
 
 class DummyAdapter implements SourceInterface
 {
-    public static function process($config)
+    public function process($config)
     {
         return false;
     }

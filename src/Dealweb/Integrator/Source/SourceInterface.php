@@ -7,5 +7,5 @@ interface SourceInterface
      * @param $config
      * @return []
      */
-    public static function process($config);
+    public function process($config);
 }

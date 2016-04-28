@@ -1,0 +1,43 @@
+source:
+  type: restApi
+  authorization:
+    serviceUrl: "http://api.dealweb.com.br/rest/v1/auth"
+    httpMethod: POST
+    expectedStatusCode: 200
+    headers:
+      Content-Type: "application/vnd.api+json"
+    bodyType: json
+    body:
+      email: api@dealweb.com.br
+      password: abc123
+    return:
+      accessToken: "$.meta.accessData.token"
+  service:
+    serviceUrl: "http://api.dealweb.com.br/rest/v1/products?filter[status]=1&limit=100"
+    httpMethod: GET
+    expectedStatusCode: 200
+    headers:
+      Authorization: "Bearer {accessToken}"
+      Content-Type: "application/vnd.api+json"
+    listRoot: "$.data[*]"
+    return:
+      productId: "$.id"
+      productCode: "$.attributes.options[0].code"
+      productName: "$.attributes.name"
+      productPrice: "$.attributes.specialPrice"
+
+destination:
+  type: csvFile
+  filePath: ../Integration/export-products.csv
+  withHeader: true
+  delimiter: ";"
+  header:
+    - Id
+    - Code
+    - Name
+    - Price
+  content:
+    - productId
+    - productCode
+    - productName
+    - productPrice

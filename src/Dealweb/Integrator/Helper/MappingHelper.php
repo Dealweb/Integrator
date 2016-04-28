@@ -28,16 +28,27 @@ class MappingHelper
         return $newValue;
     }
 
-    public static function parseJsonContent($content, $config)
+    public static function parseJsonContent($content, $config, $listRootPath = null)
     {
-        $jsonStore = new JsonStore($content);
+        $contentList = [$content];
 
-        $resultArray = [];
-        foreach ($config as $field => $jsonPath) {
-            $fieldValue = current($jsonStore->get($jsonPath));
-            $resultArray[$field] = $fieldValue;
+        if (null !== $listRootPath) {
+            $jsonStoreListRoot = new JsonStore($content);
+            $contentList = $jsonStoreListRoot->get($listRootPath);
         }
 
-        return $resultArray;
+        $resultArray = [];
+        foreach ($contentList as $index => $content) {
+            $jsonStore = new JsonStore($content);
+
+            foreach ($config as $field => $jsonPath) {
+                $fieldValue = current($jsonStore->get($jsonPath));
+                $resultArray[$index][$field] = $fieldValue;
+            }
+        }
+
+        return (null === $listRootPath)
+            ? current($resultArray)
+            : $resultArray;
     }
 }
