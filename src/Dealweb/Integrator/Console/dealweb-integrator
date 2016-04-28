@@ -7,7 +7,7 @@ define('ROOT_DIR', realpath(sprintf('%s/../../../../', __DIR__)));
 
 include_once ROOT_DIR . "/vendor/autoload.php";
 
-$application = new \Symfony\Component\Console\Application('dealweb-integrator', 'v0.1.0');
+$application = new \Symfony\Component\Console\Application('Dealweb Integrator', '@package_version@');
 
 $application->add(new RunCommand());
 
