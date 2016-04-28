@@ -10,10 +10,10 @@ class CsvFileAdapter implements DestinationInterface
 
     public function batchWrite($configArray, $values)
     {
-        $filePath = $configArray['filePath'];
-        $fileHandler = fopen($filePath, 'a+');
-
         if ($configArray['withHeader'] === true && ! $this->headerWrited) {
+            $filePath = $configArray['filePath'];
+            $fileHandler = fopen($filePath, 'w+');
+            
             fputcsv($fileHandler, $configArray['header'], $configArray['delimiter']);
             $this->headerWrited = true;
         }
@@ -25,9 +25,21 @@ class CsvFileAdapter implements DestinationInterface
     {
         $filePath = $config['filePath'];
         $fileHandler = fopen($filePath, 'a+');
+        $fieldsSequences = $config['content'];
+
+        $csvValues = [];
+        foreach ($fieldsSequences as $field) {
+            $csvValues[$field] = null;
+
+            if (! isset($values[$field])) {
+                continue;
+            }
+
+            $csvValues[$field] = $values[$field];
+        }
 
         try {
-            fputcsv($fileHandler, $values, $config['delimiter']);
+            fputcsv($fileHandler, $csvValues, $config['delimiter']);
         } catch (\Exception $e) {
             return false;
         }

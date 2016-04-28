@@ -1,0 +1,26 @@
+source:
+  type: csvFile
+  filePath: ../Integration/import-products.csv
+  ignoreFirstLine: true
+  delimiter: ";"
+  return:
+    - productName
+    - productCode
+    - productPrice
+    - productId
+
+destination:
+  type: csvFile
+  filePath: ../Integration/export-products.csv
+  withHeader: true
+  delimiter: ";"
+  header:
+    - Id
+    - Code
+    - Name
+    - Price
+  content:
+    - productId
+    - productCode
+    - productName
+    - productPrice
