@@ -24,7 +24,8 @@
     "monolog/monolog": "1.*",
     "guzzlehttp/guzzle": "5.*",
     "symfony/yaml": "2.*",
-    "peekmo/jsonpath": "2.x-dev"
+    "peekmo/jsonpath": "2.x-dev",
+    "padraic/phar-updater": "1.*"
   },
   "autoload": {
     "psr-4": {
