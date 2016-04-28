@@ -1,7 +1,9 @@
 .idea
 *.iws
+dealweb-integrator.phar
 box.phar
 composer.phar
 composer.lock
 /vendor/
+/bin/
 .DS_Store
