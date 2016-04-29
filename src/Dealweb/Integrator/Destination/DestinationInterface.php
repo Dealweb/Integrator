@@ -8,16 +8,24 @@ namespace Dealweb\Integrator\Destination;
 interface DestinationInterface
 {
     /**
-     * @param $configArray
+     * @param $config
+     * @return bool
+     */
+    public function setConfig($config);
+
+    /**
+     * @return mixed
+     */
+    public function start();
+
+    /**
      * @param $values
      * @return mixed
      */
-    public function batchWrite($configArray, $values);
+    public function write($values);
 
     /**
-     * @param $config
-     * @param array $values
      * @return mixed
      */
-    public function write($config, $values = []);
+    public function finish();
 }

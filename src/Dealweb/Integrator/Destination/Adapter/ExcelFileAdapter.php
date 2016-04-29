@@ -2,13 +2,15 @@
 namespace Dealweb\Integrator\Destination\Adapter;
 
 use Dealweb\Integrator\Destination\DestinationInterface;
+use SimpleExcel\SimpleExcel;
 
-class CsvFileAdapter implements DestinationInterface
+class ExcelFileAdapter implements DestinationInterface
 {
+    /** @var SimpleExcel */
+    protected $simpleExcel = null;
+
     /** @var array */
     protected $config;
-
-    protected $fileHandler;
 
     public function setConfig($config)
     {
@@ -17,11 +19,10 @@ class CsvFileAdapter implements DestinationInterface
 
     public function start()
     {
-        $filePath = $this->config['filePath'];
-        $this->fileHandler = fopen($filePath, 'w+');
+        $this->simpleExcel = new SimpleExcel('xml');
 
         if ($this->config['withHeader'] === true) {
-            fputcsv($this->fileHandler, $this->config['header'], $this->config['delimiter']);
+            $this->simpleExcel->writer->addRow($this->config['header']);
         }
     }
 
@@ -29,28 +30,27 @@ class CsvFileAdapter implements DestinationInterface
     {
         $fieldsSequences = $this->config['content'];
 
-        $csvValues = [];
+        $xmlValues = [];
         foreach ($fieldsSequences as $field) {
-            $csvValues[$field] = null;
+            $xmlValues[$field] = null;
 
             if (! isset($values[$field])) {
                 continue;
             }
 
-            $csvValues[$field] = $values[$field];
+            $xmlValues[$field] = $values[$field];
         }
 
-        try {
-            fputcsv($this->fileHandler, $csvValues, $this->config['delimiter']);
-        } catch (\Exception $e) {
-            return false;
-        }
-
+        $this->simpleExcel->writer->addRow($xmlValues);
         return true;
     }
 
     public function finish()
     {
-        return true;
+        $result = $this->simpleExcel->writer->saveString();
+
+        $fp = fopen($this->config['filePath'], 'w+');
+        fwrite($fp, $result);
+        fclose($fp);
     }
 }

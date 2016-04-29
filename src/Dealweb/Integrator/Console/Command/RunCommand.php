@@ -33,6 +33,7 @@ class RunCommand extends AbstractDealwebCommand
 
         $source = SourceFactory::create($layoutConfig['source']['type']);
         $destination = DestinationFactory::create($layoutConfig['destination']['type']);
+        $destination->setConfig($layoutConfig['destination']);
 
         $this->output->writeln(sprintf(
             'Starting integration with source "%s" and destination "%s"',
@@ -42,6 +43,8 @@ class RunCommand extends AbstractDealwebCommand
 
         $count = 0;
         $errorCount = 0;
+
+        $destination->start();
         foreach ($source->process($layoutConfig['source']) as $fieldValues) {
             $count++;
             $this->startProcess(sprintf('Processing record number: %s', $count));
@@ -49,12 +52,14 @@ class RunCommand extends AbstractDealwebCommand
                 continue;
             }
 
-            $success = $destination->batchWrite($layoutConfig['destination'], $fieldValues);
+            $success = $destination->write($fieldValues);
+
             $this->endProcess($success);
             if (! $success) {
                 $errorCount++;
             }
         }
+        $destination->finish();
 
         $this->output->writeln('');
         $this->output->writeln(sprintf('Finished! %s record(s) processed, %s process failed', $count, $errorCount));

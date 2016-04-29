@@ -14,24 +14,29 @@ class RestApiAdapter implements DestinationInterface
     /** @var \Exception */
     protected $lastError;
 
-    /** @var boolean */
-    protected $authorizationExecuted;
+    /** @var array */
+    protected $config;
+
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
 
     public function __construct()
     {
         $this->globalFields = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
     }
 
-    public function batchWrite($configArray, $values)
+    public function start()
     {
-        if (! $this->isAuthorizationExecuted()) {
-            $this->authorizationExecuted = true;
-            $this->write($configArray['authorization'], $values);
-        }
+        $this->call($this->config['authorization'], []);
+    }
 
-        foreach ($configArray['services'] as $configName => $config) {
+    public function write($values)
+    {
+        foreach ($this->config['services'] as $configName => $config) {
             $values = array_merge($this->globalFields->getArrayCopy(), $values);
-            $result = $this->write($config, $values);
+            $result = $this->call($config, $values);
             if ($result === 404) {
                 return false;
             } elseif ($result === true) {
@@ -43,7 +48,7 @@ class RestApiAdapter implements DestinationInterface
         return true;
     }
 
-    public function write($config, $values = [])
+    private function call($config, $values = [])
     {
         $body = null;
         if (isset($config['body'])) {
@@ -92,19 +97,8 @@ class RestApiAdapter implements DestinationInterface
         return true;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isAuthorizationExecuted()
+    public function finish()
     {
-        return $this->authorizationExecuted;
-    }
-
-    /**
-     * @param boolean $authorizationExecuted
-     */
-    public function setAuthorizationExecuted($authorizationExecuted)
-    {
-        $this->authorizationExecuted = $authorizationExecuted;
+        return true;
     }
 }

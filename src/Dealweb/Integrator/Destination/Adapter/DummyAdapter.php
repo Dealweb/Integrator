@@ -5,12 +5,22 @@ use Dealweb\Integrator\Destination\DestinationInterface;
 
 class DummyAdapter implements DestinationInterface
 {
-    public function batchWrite($configArray, $values)
+    public function setConfig($config)
     {
         return true;
     }
 
-    public function write($config, $values = [])
+    public function start()
+    {
+        return true;
+    }
+
+    public function write($values)
+    {
+        return true;
+    }
+
+    public function finish()
     {
         return true;
     }

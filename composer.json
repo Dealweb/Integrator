@@ -25,6 +25,7 @@
     "guzzlehttp/guzzle": "5.*",
     "symfony/yaml": "2.*",
     "peekmo/jsonpath": "2.x-dev",
+    "faisalman/simple-excel-php" : "0.3.*",
     "padraic/phar-updater": "1.*"
   },
   "autoload": {
