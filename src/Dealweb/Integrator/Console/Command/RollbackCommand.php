@@ -39,7 +39,7 @@ class SelfUpdateCommand extends AbstractDealwebCommand
             $output->writeln(sprintf('Rollback from version %s to %s!', $oldVersion, $newVersion));
             return 0;
         } catch (\Exception $e) {
-            $output->writeln('Unknown Error while trying to rollback the library!');
+            $output->writeln('Error: ' . $e->getMessage());
             return 1;
         }
     }

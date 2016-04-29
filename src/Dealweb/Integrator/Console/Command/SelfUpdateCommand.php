@@ -44,7 +44,7 @@ class SelfUpdateCommand extends AbstractDealwebCommand
             $output->writeln(sprintf('Updated from version %s to %s!', $oldVersion, $newVersion));
             return 0;
         } catch (\Exception $e) {
-            $output->writeln('Unknown Error while updating the library!');
+            $output->writeln('Error: ' . $e->getMessage());
             return 1;
         }
     }
