@@ -25,7 +25,14 @@ class RunCommand extends AbstractDealwebCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $layoutFilePath = $input->getOption('layout-file');
+
+        if (null === $layoutFilePath) {
+            $output->writeln("<error>A layout file must be provided.</error>");
+            return 1;
+        }
+
         if (! file_exists($layoutFilePath)) {
+            $output->writeln("<error>The layout provided was not found.</error>");
             return 1;
         }
 
