@@ -1,16 +1,16 @@
 <?php
 namespace Dealweb\Integrator\Console\Command;
 
-use Dealweb\Integrator\Destination\DestinationFactory;
+use Symfony\Component\Yaml\Yaml;
 use Dealweb\Integrator\Source\SourceFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\TableStyle;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dealweb\Integrator\Console\AbstractDealwebCommand;
-use Symfony\Component\Yaml\Yaml;
+use Dealweb\Integrator\Destination\DestinationFactory;
 
 class RunCommand extends AbstractDealwebCommand
 {
