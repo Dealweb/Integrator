@@ -71,7 +71,11 @@ class RestApiAdapter implements DestinationInterface
 
         try {
             $response = $client->send($request);
-            $resultArray = MappingHelper::parseJsonContent($response->getBody()->getContents(), $returnConfig);
+
+            $resultArray = [];
+            if ($config['httpMethod'] !== 'PATCH') {
+                $resultArray = MappingHelper::parseJsonContent($response->getBody()->getContents(), $returnConfig);
+            }
             if (isset($config['expectedStatusCode']) && $response->getStatusCode() !== $config['expectedStatusCode']) {
                 throw new \Exception(sprintf(
                     'Unexpected status code %s, expecting status code %s',
@@ -80,7 +84,7 @@ class RestApiAdapter implements DestinationInterface
                 ));
             }
             $this->globalFields->exchangeArray(
-                array_merge($this->globalFields->getArrayCopy(), $resultArray)
+                array_merge((array) $this->globalFields->getArrayCopy(), $resultArray)
             );
         } catch (ClientException $e) {
             $this->lastError = $e;
