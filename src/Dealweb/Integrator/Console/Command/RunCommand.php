@@ -1,16 +1,16 @@
 <?php
 namespace Dealweb\Integrator\Console\Command;
 
-use Dealweb\Integrator\Destination\DestinationFactory;
+use Symfony\Component\Yaml\Yaml;
 use Dealweb\Integrator\Source\SourceFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\TableStyle;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dealweb\Integrator\Console\AbstractDealwebCommand;
-use Symfony\Component\Yaml\Yaml;
+use Dealweb\Integrator\Destination\DestinationFactory;
 
 class RunCommand extends AbstractDealwebCommand
 {
@@ -25,7 +25,14 @@ class RunCommand extends AbstractDealwebCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $layoutFilePath = $input->getOption('layout-file');
+
+        if (null === $layoutFilePath) {
+            $output->writeln("<error>A layout file must be provided.</error>");
+            return 1;
+        }
+
         if (! file_exists($layoutFilePath)) {
+            $output->writeln("<error>The layout provided was not found.</error>");
             return 1;
         }
 

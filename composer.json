@@ -3,7 +3,9 @@
   "description": "Integration Tool",
   "license": "GPL-3.0+",
   "homepage": "http://github.com/Dealweb/Integrator",
-  "bin": ["bin/dealweb-integrator"],
+  "bin": [
+    "bin/dealweb-integrator"
+  ],
   "support": {
     "issues": "https://github.com/Dealweb/Integrator/issues",
     "source": "https://github.com/Dealweb/Integrator"
@@ -13,6 +15,12 @@
       "name": "Henrique Oliveira",
       "email": "henrique@dealweb.com.br",
       "homepage": "http://www.dealweb.com.br",
+      "role": "Developer"
+    },
+    {
+      "name": "Caique de Castro",
+      "email": "caique.castro@dealweb.com.br",
+      "homepage": "https://www.caiquecastro.com",
       "role": "Developer"
     }
   ],
