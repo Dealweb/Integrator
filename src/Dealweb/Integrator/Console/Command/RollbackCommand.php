@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Dealweb\Integrator\Console\AbstractDealwebCommand;
 use Symfony\Component\Yaml\Yaml;
 
-class SelfUpdateCommand extends AbstractDealwebCommand
+class RollbackCommand extends AbstractDealwebCommand
 {
     protected function configure()
     {

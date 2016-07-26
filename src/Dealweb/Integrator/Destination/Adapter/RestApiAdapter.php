@@ -1,10 +1,10 @@
 <?php
 namespace Dealweb\Integrator\Destination\Adapter;
 
-use Dealweb\Integrator\Destination\DestinationInterface;
-use Dealweb\Integrator\Helper\MappingHelper;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use Dealweb\Integrator\Helper\MappingHelper;
+use Dealweb\Integrator\Destination\DestinationInterface;
 
 class RestApiAdapter implements DestinationInterface
 {
