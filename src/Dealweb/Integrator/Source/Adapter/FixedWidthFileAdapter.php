@@ -6,7 +6,7 @@ use Dealweb\Integrator\Validation\ConditionValidator;
 
 class FixedWidthFileAdapter implements SourceInterface
 {
-    public static function process($config)
+    public function process($config)
     {
         $filePath = $config['filePath'];
         if (! file_exists($filePath)) {
