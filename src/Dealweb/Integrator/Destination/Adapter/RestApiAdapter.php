@@ -87,11 +87,7 @@ class RestApiAdapter implements DestinationInterface
                 $this->output->writeln(' -- Body: ' . $body);
             }
 
-            if ($config['httpMethod'] !== 'PATCH') {
-                $response = $client->send($request);
-            } else {
-                return true;
-            }
+            $response = $client->send($request);
 
             $resultArray = [];
             if ($config['httpMethod'] !== 'PATCH') {
