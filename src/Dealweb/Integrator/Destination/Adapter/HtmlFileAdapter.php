@@ -3,6 +3,7 @@ namespace Dealweb\Integrator\Destination\Adapter;
 
 use Dealweb\Integrator\Destination\DestinationInterface;
 use SimpleExcel\SimpleExcel;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class HtmlFileAdapter implements DestinationInterface
 {
@@ -12,13 +13,17 @@ class HtmlFileAdapter implements DestinationInterface
     /** @var array */
     protected $config;
 
+    /** @var OutputInterface */
+    protected $output;
+
     public function setConfig($config)
     {
         $this->config = $config;
     }
 
-    public function start()
+    public function start(OutputInterface $output)
     {
+        $this->output = $output;
         $this->simpleExcel = new SimpleExcel('html');
 
         if ($this->config['withHeader'] === true) {

@@ -1,6 +1,8 @@
 <?php
 namespace Dealweb\Integrator\Destination;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 /**
  * Interface DestinationInterface
  * @package Dealweb\Integrator\Destination
@@ -16,7 +18,7 @@ interface DestinationInterface
     /**
      * @return mixed
      */
-    public function start();
+    public function start(OutputInterface $output);
 
     /**
      * @param $values

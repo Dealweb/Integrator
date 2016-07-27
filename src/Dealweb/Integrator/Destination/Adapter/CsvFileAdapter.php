@@ -2,6 +2,7 @@
 namespace Dealweb\Integrator\Destination\Adapter;
 
 use Dealweb\Integrator\Destination\DestinationInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class CsvFileAdapter implements DestinationInterface
 {
@@ -10,13 +11,17 @@ class CsvFileAdapter implements DestinationInterface
 
     protected $fileHandler;
 
+    /** @var OutputInterface */
+    protected $output;
+
     public function setConfig($config)
     {
         $this->config = $config;
     }
 
-    public function start()
+    public function start(OutputInterface $output)
     {
+        $this->output = $output;
         $filePath = $this->config['filePath'];
         $this->fileHandler = fopen($filePath, 'w+');
 

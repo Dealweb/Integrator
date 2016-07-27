@@ -48,7 +48,8 @@ class RunCommand extends AbstractDealwebCommand
         $count = 0;
         $errorCount = 0;
 
-        $destination->start();
+        $destination->start($output);
+
         foreach ($source->process($layoutConfig['source']) as $fieldValues) {
             $count++;
             $this->startProcess(sprintf('Processing record number: %s', $count));

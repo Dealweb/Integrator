@@ -5,6 +5,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Dealweb\Integrator\Helper\MappingHelper;
 use Dealweb\Integrator\Destination\DestinationInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class RestApiAdapter implements DestinationInterface
 {
@@ -17,6 +18,9 @@ class RestApiAdapter implements DestinationInterface
     /** @var array */
     protected $config;
 
+    /** @var OutputInterface */
+    protected $output;
+
     public function setConfig($config)
     {
         $this->config = $config;
@@ -27,15 +31,17 @@ class RestApiAdapter implements DestinationInterface
         $this->globalFields = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
     }
 
-    public function start()
+    public function start(OutputInterface $output)
     {
+        $this->output = $output;
         $this->call($this->config['authorization'], []);
     }
 
     public function write($values)
     {
+        $this->globalFields->exchangeArray(array_merge($this->globalFields->getArrayCopy(), $values));
         foreach ($this->config['services'] as $configName => $config) {
-            $values = array_merge($this->globalFields->getArrayCopy(), $values);
+            $values = $this->globalFields->getArrayCopy();
             $result = $this->call($config, $values);
             if ($result === 404) {
                 return false;
@@ -59,9 +65,10 @@ class RestApiAdapter implements DestinationInterface
             $body = json_encode($body);
         }
 
-        $client = new Client();
-        $headers = MappingHelper::parseContent($config['headers'], $values);
-        $request = $client->createRequest($config['httpMethod'], MappingHelper::parseContent($config['serviceUrl'], $values), [
+        $client     = new Client();
+        $headers    = MappingHelper::parseContent($config['headers'], $values);
+        $serviceUrl = MappingHelper::parseContent($config['serviceUrl'], $values);
+        $request    = $client->createRequest($config['httpMethod'], $serviceUrl, [
             'headers' => $headers,
             'body' => $body,
             'verify' => false
@@ -70,7 +77,21 @@ class RestApiAdapter implements DestinationInterface
         $returnConfig = (isset($config['return']))? $config['return'] : [];
 
         try {
-            $response = $client->send($request);
+            if ($this->output->isVerbose()) {
+                $this->output->writeln(sprintf(
+                    ' => Calling: [%s] %s',
+                    $config['httpMethod'],
+                    $serviceUrl
+                ));
+
+                $this->output->writeln(' -- Body: ' . $body);
+            }
+
+            if ($config['httpMethod'] !== 'PATCH') {
+                $response = $client->send($request);
+            } else {
+                return true;
+            }
 
             $resultArray = [];
             if ($config['httpMethod'] !== 'PATCH') {

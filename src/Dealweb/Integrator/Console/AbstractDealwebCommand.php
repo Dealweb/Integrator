@@ -36,15 +36,25 @@ abstract class AbstractDealwebCommand extends Command
 
     public function startProcess($message)
     {
-        $this->output->write(str_pad("   - " . $message, $this->columns - 15, ' ', STR_PAD_RIGHT));
+        if (! $this->output->isVerbose()) {
+            $this->output->write(str_pad("   - " . $message, $this->columns - 15, ' ', STR_PAD_RIGHT));
+        }
     }
 
     public function endProcess($status = true)
     {
+        if ($this->output->isVerbose()) {
+            $this->output->write(" <= ");
+        }
+
         if ($status) {
             $this->output->writeln("[   <info>Ok</info>   ]");
         } else {
             $this->output->writeln("[ <error>Failed</error> ]");
+        }
+
+        if ($this->output->isVerbose()) {
+            $this->output->writeln("");
         }
     }
 

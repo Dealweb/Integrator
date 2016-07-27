@@ -2,6 +2,7 @@
 namespace Dealweb\Integrator\Destination\Adapter;
 
 use Dealweb\Integrator\Destination\DestinationInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class DummyAdapter implements DestinationInterface
 {
@@ -10,7 +11,7 @@ class DummyAdapter implements DestinationInterface
         return true;
     }
 
-    public function start()
+    public function start(OutputInterface $output)
     {
         return true;
     }
