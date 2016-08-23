@@ -13,9 +13,10 @@ class FixedWidthFileAdapter implements SourceInterface
             yield false;
         }
 
+        $handle = fopen($filePath, 'r');
+
         $mappings = $config['fieldMapping'];
 
-        $handle = fopen($filePath, 'r');
         if ($config['ignoreFirstLine'] === true) {
             fgets($handle);
         }

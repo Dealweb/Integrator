@@ -4,8 +4,8 @@ namespace Dealweb\Integrator\Destination\Adapter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Dealweb\Integrator\Helper\MappingHelper;
-use Dealweb\Integrator\Destination\DestinationInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Dealweb\Integrator\Destination\DestinationInterface;
 
 class RestApiAdapter implements DestinationInterface
 {
@@ -40,9 +40,11 @@ class RestApiAdapter implements DestinationInterface
     public function write($values)
     {
         $this->globalFields->exchangeArray(array_merge($this->globalFields->getArrayCopy(), $values));
-        foreach ($this->config['services'] as $configName => $config) {
+
+        foreach ($this->config['services'] as $config) {
             $values = $this->globalFields->getArrayCopy();
             $result = $this->call($config, $values);
+
             if ($result === 404) {
                 return false;
             } elseif ($result === true) {
@@ -57,6 +59,7 @@ class RestApiAdapter implements DestinationInterface
     private function call($config, $values = [])
     {
         $body = null;
+
         if (isset($config['body'])) {
             $body = MappingHelper::parseContent($config['body'], $values);
         }
@@ -93,6 +96,7 @@ class RestApiAdapter implements DestinationInterface
             if ($config['httpMethod'] !== 'PATCH') {
                 $resultArray = MappingHelper::parseJsonContent($response->getBody()->getContents(), $returnConfig);
             }
+
             if (isset($config['expectedStatusCode']) && $response->getStatusCode() !== $config['expectedStatusCode']) {
                 throw new \Exception(sprintf(
                     'Unexpected status code %s, expecting status code %s',
