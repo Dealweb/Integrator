@@ -11,27 +11,29 @@ use Dealweb\Integrator\Destination\DestinationFactory;
 
 class RunCommand extends AbstractDealwebCommand
 {
+    /**
+     * Configures the current command.
+     */
     protected function configure()
     {
         $this->setName('run');
-        $this->setDescription('Dealweb integrator tool');
+        $this->setDescription('Dealweb Integrator tool');
 
         $this->addOption('layout-file', null, InputOption::VALUE_REQUIRED, 'Layout file with integration details');
     }
 
+    /**
+     * Execute the console command.
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $layoutFilePath = $input->getOption('layout-file');
 
-        if (null === $layoutFilePath) {
-            $output->writeln("<error>A layout file must be provided.</error>");
-            return 1;
-        }
-
-        if (! file_exists($layoutFilePath)) {
-            $output->writeln("<error>The layout provided was not found.</error>");
-            return 1;
-        }
+        $this->validateFilePath($layoutFilePath);
 
         $layoutConfig = Yaml::parse(file_get_contents($layoutFilePath));
 
@@ -64,11 +66,31 @@ class RunCommand extends AbstractDealwebCommand
                 $errorCount++;
             }
         }
+
         $destination->finish();
 
-        $this->output->writeln('');
         $this->output->writeln(sprintf('Finished! %s record(s) processed, %s process failed', $count, $errorCount));
 
         return 0;
+    }
+
+    /**
+     * Validates the input file for the integration.
+     *
+     * @param $filePath
+     * @return bool
+     * @throws \Exception
+     */
+    private function validateFilePath($filePath)
+    {
+        if (null === $filePath) {
+            throw new \Exception('A layout file must be provided.');
+        }
+
+        if (! file_exists($filePath)) {
+            throw new \Exception('The layout provided was not found.');
+        }
+
+        return true;
     }
 }

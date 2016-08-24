@@ -71,6 +71,7 @@ class RestApiAdapter implements DestinationInterface
         $client     = new Client();
         $headers    = MappingHelper::parseContent($config['headers'], $values);
         $serviceUrl = MappingHelper::parseContent($config['serviceUrl'], $values);
+
         $request    = $client->createRequest($config['httpMethod'], $serviceUrl, [
             'headers' => $headers,
             'body' => $body,
