@@ -1,44 +1,47 @@
 {
-  "name": "dealweb/integrator",
-  "description": "Integration Tool",
-  "license": "GPL-3.0+",
-  "homepage": "http://github.com/Dealweb/Integrator",
-  "bin": [
-    "bin/dealweb-integrator"
-  ],
-  "support": {
-    "issues": "https://github.com/Dealweb/Integrator/issues",
-    "source": "https://github.com/Dealweb/Integrator"
-  },
-  "authors": [
-    {
-      "name": "Henrique Oliveira",
-      "email": "henrique@dealweb.com.br",
-      "homepage": "http://www.dealweb.com.br",
-      "role": "Developer"
+    "name": "dealweb/integrator",
+    "description": "Integration Tool",
+    "license": "GPL-3.0+",
+    "homepage": "http://github.com/Dealweb/Integrator",
+    "bin": [
+        "bin/dealweb-integrator"
+    ],
+    "support": {
+        "issues": "https://github.com/Dealweb/Integrator/issues",
+        "source": "https://github.com/Dealweb/Integrator"
     },
-    {
-      "name": "Caique de Castro",
-      "email": "caique.castro@dealweb.com.br",
-      "homepage": "https://www.caiquecastro.com",
-      "role": "Developer"
+    "authors": [
+        {
+            "name": "Henrique Oliveira",
+            "email": "henrique@dealweb.com.br",
+            "homepage": "http://www.dealweb.com.br",
+            "role": "Developer"
+        },
+        {
+            "name": "Caique de Castro",
+            "email": "caique.castro@dealweb.com.br",
+            "homepage": "https://www.caiquecastro.com",
+            "role": "Developer"
+        }
+    ],
+    "config": {
+        "vendor-dir": "vendor"
+    },
+    "require": {
+        "symfony/console": "3.*",
+        "monolog/monolog": "1.*",
+        "guzzlehttp/guzzle": "5.*",
+        "symfony/yaml": "2.*",
+        "peekmo/jsonpath": "2.x-dev",
+        "faisalman/simple-excel-php": "0.3.*",
+        "padraic/phar-updater": "1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dealweb\\": "src/Dealweb/"
+        }
     }
-  ],
-  "config": {
-    "vendor-dir": "vendor"
-  },
-  "require": {
-    "symfony/console": "3.*",
-    "monolog/monolog": "1.*",
-    "guzzlehttp/guzzle": "5.*",
-    "symfony/yaml": "2.*",
-    "peekmo/jsonpath": "2.x-dev",
-    "faisalman/simple-excel-php" : "0.3.*",
-    "padraic/phar-updater": "1.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Dealweb\\": "src/Dealweb/"
-    }
-  }
 }

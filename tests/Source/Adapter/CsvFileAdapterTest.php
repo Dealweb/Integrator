@@ -5,10 +5,14 @@ use Dealweb\Integrator\Source\Adapter\CsvFileAdapter;
 
 class CsvFileAdapterTest extends TestCase
 {
-    /** @test */
-    public function it_tests_true()
+    /**
+     * @test
+     * @expectedException Dealweb\Integrator\Exceptions\InvalidArgumentException
+     */
+    public function it_throws_exception_if_no_file_path_config_is_defined()
     {
-        //TODO: Implement test for this class.
-        $this->assertTrue(true);
+        $csvFileAdapter = new CsvFileAdapter;
+
+        $csvFileAdapterReturn = $csvFileAdapter->process([]);
     }
 }

@@ -2,13 +2,17 @@
 namespace Dealweb\Integrator\Source\Adapter;
 
 use Dealweb\Integrator\Source\SourceInterface;
+use Dealweb\Integrator\Exceptions\InvalidFilePathException;
 
 class CsvFileAdapter implements SourceInterface
 {
     public function process($config)
     {
-        if (! file_exists($config['filePath'])) {
-            yield false;
+        $filePathConfig = isset($config['filePath']) ? $config['filePath'] : null;
+
+        if (! $filePathConfig || ! file_exists($filePathConfig)) {
+            throw new InvalidFilePathException;
+            //yield false;
         }
 
         $fileHandler = fopen($config['filePath'], 'r');
