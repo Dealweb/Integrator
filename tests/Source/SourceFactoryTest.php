@@ -4,8 +4,8 @@ use PHPUnit\Framework\TestCase;
 use Dealweb\Integrator\Source\SourceFactory;
 use Dealweb\Integrator\Source\Adapter\DummyAdapter;
 use Dealweb\Integrator\Source\Adapter\CsvFileAdapter;
-use Dealweb\Integrator\Source\Adapter\FixedWidthFileAdapter;
 use Dealweb\Integrator\Source\Adapter\RestApiAdapter;
+use Dealweb\Integrator\Source\Adapter\FixedWidthFileAdapter;
 
 class SourceFactoryTest extends TestCase
 {

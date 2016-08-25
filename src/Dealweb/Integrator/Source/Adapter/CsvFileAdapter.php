@@ -10,9 +10,9 @@ class CsvFileAdapter implements SourceInterface
     {
         $filePathConfig = isset($config['filePath']) ? $config['filePath'] : null;
 
-        if (! $filePathConfig || ! file_exists($filePathConfig)) {
+        if (! ($filePathConfig && file_exists($filePathConfig))) {
             throw new InvalidFilePathException;
-            //yield false;
+//            yield false;
         }
 
         $fileHandler = fopen($config['filePath'], 'r');

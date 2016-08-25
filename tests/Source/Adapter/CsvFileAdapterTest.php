@@ -7,12 +7,12 @@ class CsvFileAdapterTest extends TestCase
 {
     /**
      * @test
-     * @expectedException Dealweb\Integrator\Exceptions\InvalidArgumentException
      */
-    public function it_throws_exception_if_no_file_path_config_is_defined()
+    public function it_throws_exception_if_no_file_path_is_defined()
     {
+        // TODO: expect exception Dealweb\Integrator\Exceptions\InvalidFilePathException
         $csvFileAdapter = new CsvFileAdapter;
 
-        $csvFileAdapterReturn = $csvFileAdapter->process([]);
+        $csvFileAdapter->process([]);
     }
 }
