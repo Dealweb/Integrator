@@ -7,7 +7,6 @@ input/output in order to normalize them.
 
 The following PHP are supported:
 
-* PHP 5.5
 * PHP 5.6
 * PHP 7.0
 

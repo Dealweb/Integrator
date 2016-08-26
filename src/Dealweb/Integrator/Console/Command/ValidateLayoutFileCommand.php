@@ -19,6 +19,7 @@ class ValidateLayoutFileCommand extends AbstractDealwebCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $file = $input->getArgument('file');
+
         if (!file_exists($file)) {
             $output->writeln("<error>The requested file was not found or is not accessible.</error>");
         }

@@ -16,6 +16,7 @@ interface DestinationInterface
     public function setConfig($config);
 
     /**
+     * @param OutputInterface $output
      * @return mixed
      */
     public function start(OutputInterface $output);
