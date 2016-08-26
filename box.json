@@ -1,21 +1,23 @@
 {
-  "chmod": "0755",
-  "compression": "GZ",
-  "directories": [
-    "src"
-  ],
-  "files": [
-    "LICENSE.txt"
-  ],
-  "finder": [
-    {
-      "name": "*.php",
-      "exclude": ["Tests"],
-      "in": "vendor"
-    }
-  ],
-  "git-version": "package_version",
-  "main": "src/Dealweb/Integrator/Console/dealweb-integrator",
-  "output": "bin/dealweb-integrator.phar",
-  "stub": true
+    "chmod": "0755",
+    "compression": "GZ",
+    "directories": [
+        "src"
+    ],
+    "files": [
+        "LICENSE.txt"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": [
+                "Tests"
+            ],
+            "in": "vendor"
+        }
+    ],
+    "git-version": "package_version",
+    "main": "src/Dealweb/Integrator/Console/dealweb-integrator",
+    "output": "bin/dealweb-integrator.phar",
+    "stub": true
 }
