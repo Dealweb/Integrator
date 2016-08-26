@@ -6,6 +6,7 @@ use Dealweb\Integrator\Source\SourceFactory;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Dealweb\Integrator\Validation\LayoutFileValidator;
 use Dealweb\Integrator\Console\AbstractDealwebCommand;
 use Dealweb\Integrator\Destination\DestinationFactory;
 
@@ -36,6 +37,8 @@ class RunCommand extends AbstractDealwebCommand
         $this->validateFilePath($layoutFilePath);
 
         $layoutConfig = Yaml::parse(file_get_contents($layoutFilePath));
+
+        $this->validateConfig($layoutConfig);
 
         $source = SourceFactory::create($layoutConfig['source']['type']);
         $destination = DestinationFactory::create($layoutConfig['destination']['type']);
@@ -92,5 +95,12 @@ class RunCommand extends AbstractDealwebCommand
         }
 
         return true;
+    }
+
+    private function validateConfig($config)
+    {
+        $layoutFileValidator = new LayoutFileValidator($config);
+
+        $layoutFileValidator->validate();
     }
 }

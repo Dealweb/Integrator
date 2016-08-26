@@ -1,5 +1,5 @@
 <?php
-namespace Dealweb\Integrator\File;
+namespace Dealweb\Integrator\Exceptions;
 
 use Exception;
 

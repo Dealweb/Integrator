@@ -1,0 +1,75 @@
+<?php
+
+use Dealweb\Integrator\Validation\LayoutFileValidator;
+use PHPUnit\Framework\TestCase;
+
+class LayoutFileValidatorTest extends TestCase
+{
+    /**
+     * @test
+     * @expectedException Dealweb\Integrator\Exceptions\InvalidFileFormatException
+     */
+    public function it_requires_to_have_source_setup()
+    {
+        $layoutFileValidator = new LayoutFileValidator([
+            // no source setup
+            'destination' => [
+
+            ]
+        ]);
+
+        $layoutFileValidator->validate();
+    }
+
+    /**
+     * @test
+     * @expectedException Dealweb\Integrator\Exceptions\InvalidFileFormatException
+     */
+    public function it_requires_to_have_destination_setup()
+    {
+        $layoutFileValidator = new LayoutFileValidator([
+            'source' => [
+
+            ],
+            // no destination setup
+        ]);
+
+        $layoutFileValidator->validate();
+    }
+
+    /**
+     * @test
+     * @expectedException Dealweb\Integrator\Exceptions\InvalidFileFormatException
+     */
+    public function it_requires_to_have_a_valid_source_type()
+    {
+        $layoutFileValidator = new LayoutFileValidator([
+            'source' => [
+
+            ],
+            'destination' => [
+
+            ]
+        ]);
+
+        $layoutFileValidator->validate();
+    }
+
+    /**
+     * @test
+     * @expectedException Dealweb\Integrator\Exceptions\InvalidFileTypeException
+     */
+    public function it_does_not_validate_invalid_source_types()
+    {
+        $layoutFileValidator = new LayoutFileValidator([
+            'source' => [
+                'type' => 'gibberish'
+            ],
+            'destination' => [
+
+            ]
+        ]);
+
+        $layoutFileValidator->validate();
+    }
+}
