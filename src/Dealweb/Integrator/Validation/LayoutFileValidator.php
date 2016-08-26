@@ -35,6 +35,8 @@ class LayoutFileValidator
         $this->validateDestination(
             $this->content['destination']
         );
+
+        return true;
     }
 
     /**
@@ -51,10 +53,13 @@ class LayoutFileValidator
             throw new InvalidFileFormatException('A source type is required for the setup.');
         }
 
-        $sourceTypeClass = sprintf('\Dealweb\Integrator\Source\Adapter\%sAdapter', $source['type']);
+        $sourceTypeClass = sprintf(
+            '\Dealweb\Integrator\Source\Adapter\%sAdapter',
+            ucfirst($source['type'])
+        );
 
         if (! class_exists($sourceTypeClass)) {
-            throw new InvalidFileTypeException;
+            throw new InvalidFileTypeException(sprintf('The %s class was not found.', $sourceTypeClass));
         }
 
         return true;
@@ -65,14 +70,22 @@ class LayoutFileValidator
      *
      * @param $destination
      * @return bool
+     * @throws InvalidFileFormatException
      * @throws InvalidFileTypeException
      */
     protected function validateDestination($destination)
     {
-        $sourceTypeClass = sprintf('\Dealweb\Integrator\Destination\Adapter\%sAdapter', $destination['type']);
+        if (! isset($destination['type'])) {
+            throw new InvalidFileFormatException('A destination type is required for the setup.');
+        }
 
-        if (! class_exists($sourceTypeClass)) {
-            throw new InvalidFileTypeException;
+        $destinationTypeClass = sprintf(
+            '\Dealweb\Integrator\Destination\Adapter\%sAdapter',
+            ucfirst($destination['type'])
+        );
+
+        if (! class_exists($destinationTypeClass)) {
+            throw new InvalidFileTypeException(sprintf('The %s class was not found.', $destinationTypeClass));
         }
 
         return true;

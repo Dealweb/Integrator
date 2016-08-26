@@ -18,14 +18,6 @@ class SourceFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_dummy_adapter_when_no_appropriate_adapter_is_found()
-    {
-        $unexistentAdapter = SourceFactory::create('bla');
-
-        $this->assertInstanceOf(DummyAdapter::class, $unexistentAdapter);
-    }
-
-    /** @test */
     public function it_creates_fixed_width_file_adapter()
     {
         $fixedWidthFileAdapter = SourceFactory::create('fixedWidthFile');
@@ -39,5 +31,13 @@ class SourceFactoryTest extends TestCase
         $restApiAdapter = SourceFactory::create('restApi');
 
         $this->assertInstanceOf(RestApiAdapter::class, $restApiAdapter);
+    }
+
+    /** @test */
+    public function it_creates_dummy_adapter_when_no_appropriate_adapter_is_found()
+    {
+        $nonExistentAdapter = SourceFactory::create('bla');
+
+        $this->assertInstanceOf(DummyAdapter::class, $nonExistentAdapter);
     }
 }

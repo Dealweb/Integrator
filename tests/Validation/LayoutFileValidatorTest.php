@@ -72,4 +72,38 @@ class LayoutFileValidatorTest extends TestCase
 
         $layoutFileValidator->validate();
     }
+
+    /**
+     * @test
+     */
+    public function it_validates_csv_file_source_type()
+    {
+        $layoutFileValidator = new LayoutFileValidator([
+            'source' => [
+                'type' => 'csvFile'
+            ],
+            'destination' => [
+                'type' => 'csvFile'
+            ]
+        ]);
+
+        $this->assertTrue($layoutFileValidator->validate());
+    }
+
+    /**
+     * @test
+     */
+    public function it_validates_fixed_width_file_source_type()
+    {
+        $layoutFileValidator = new LayoutFileValidator([
+            'source' => [
+                'type' => 'fixedWidthFile'
+            ],
+            'destination' => [
+                'type' => 'csvFile'
+            ]
+        ]);
+
+        $layoutFileValidator->validate();
+    }
 }
