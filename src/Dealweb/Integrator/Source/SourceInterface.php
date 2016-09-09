@@ -4,6 +4,8 @@ namespace Dealweb\Integrator\Source;
 interface SourceInterface
 {
     /**
+     * Process the source input.
+     *
      * @param $config
      * @return []
      */

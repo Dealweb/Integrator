@@ -12,6 +12,7 @@ class SourceFactory
     public static function create($className)
     {
         $className = sprintf('\Dealweb\Integrator\Source\Adapter\%sAdapter', ucfirst($className));
+
         if (! class_exists($className)) {
             return new DummyAdapter;
         }

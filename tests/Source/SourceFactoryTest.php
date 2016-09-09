@@ -9,7 +9,9 @@ use Dealweb\Integrator\Source\Adapter\FixedWidthFileAdapter;
 
 class SourceFactoryTest extends TestCase
 {
-    /** @test */
+    /**
+     * @test
+     */
     public function it_creates_csv_file_adapter()
     {
         $csvFileAdapter = SourceFactory::create('csvFile');
@@ -17,7 +19,9 @@ class SourceFactoryTest extends TestCase
         $this->assertInstanceOf(CsvFileAdapter::class, $csvFileAdapter);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_creates_fixed_width_file_adapter()
     {
         $fixedWidthFileAdapter = SourceFactory::create('fixedWidthFile');
@@ -25,7 +29,9 @@ class SourceFactoryTest extends TestCase
         $this->assertInstanceOf(FixedWidthFileAdapter::class, $fixedWidthFileAdapter);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_creates_rest_api_adapter()
     {
         $restApiAdapter = SourceFactory::create('restApi');
@@ -33,7 +39,9 @@ class SourceFactoryTest extends TestCase
         $this->assertInstanceOf(RestApiAdapter::class, $restApiAdapter);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function it_creates_dummy_adapter_when_no_appropriate_adapter_is_found()
     {
         $nonExistentAdapter = SourceFactory::create('bla');
