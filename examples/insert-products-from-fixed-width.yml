@@ -1,0 +1,60 @@
+source:
+  type: fixedWidthFile
+  filePath: /home/caique/Downloads/input-casapronta.txt
+  ignoreFirstLine: false
+  fieldMapping:
+    productCode:
+      position: [1, 7]
+    productName:
+      position: [71, 50]
+    normalPrice:
+      position: [592, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+    specialPrice:
+      position: [604, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+    costPrice:
+      position: [652, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+
+destination:
+  type: restApi
+  authorization:
+    serviceUrl: "https://api.test.dev/rest/v1/auth"
+    httpMethod: POST
+    expectedStatusCode: 200
+    headers:
+      Content-Type: "application/vnd.api+json"
+      Accept: "application/vnd.api+json"
+    bodyType: json
+    body:
+      email: api@dealweb.com.br
+      password: abc123
+    return:
+      accessToken: "$.meta.accessData.token"
+  services:
+    insert-product:
+      serviceUrl: "https://api.test.dev/rest/v1/products"
+      httpMethod: POST
+      expectedStatusCode: 200
+      headers:
+        Authorization: "Bearer {accessToken}"
+        Accept: "application/vnd.api+json"
+        Content-Type: "application/vnd.api+json"
+      bodyType: json
+      body:
+        data:
+          type: Product
+          attributes:
+            name: "{productName}"
+            options:
+              code: "{productCode}"
+              costPrice: "{costPrice}"
+              normalPrice: "{normalPrice}"
+              specialPrice: "{specialPrice}"

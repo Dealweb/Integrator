@@ -18,8 +18,6 @@ class MappingHelper
                 foreach ($newValue as $index => $individualValue) {
                     $newValue[$index] = self::parseContent($individualValue, $values);
                 }
-
-                continue;
             } else {
                 $newValue = str_replace(sprintf('{%s}', $field), $fieldValue, $newValue);
             }
