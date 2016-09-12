@@ -3,7 +3,7 @@ namespace Dealweb\Integrator\Console\Command;
 
 use Symfony\Component\Yaml\Yaml;
 use Dealweb\Integrator\Source\SourceFactory;
-use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dealweb\Integrator\Validation\LayoutFileValidator;
@@ -20,7 +20,7 @@ class RunCommand extends AbstractDealwebCommand
         $this->setName('run');
         $this->setDescription('Dealweb Integrator tool');
 
-        $this->addOption('layout-file', null, InputOption::VALUE_REQUIRED, 'Layout file with integration details');
+        $this->addArgument('layout-file', null, InputArgument::REQUIRED, 'Layout file with integration details');
     }
 
     /**
@@ -32,7 +32,7 @@ class RunCommand extends AbstractDealwebCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $layoutFilePath = $input->getOption('layout-file');
+        $layoutFilePath = $input->getArgument('layout-file');
 
         $this->validateFilePath($layoutFilePath);
 
@@ -97,6 +97,11 @@ class RunCommand extends AbstractDealwebCommand
         return true;
     }
 
+    /**
+     * Validates the configuration file.
+     *
+     * @param $config
+     */
     private function validateConfig($config)
     {
         $layoutFileValidator = new LayoutFileValidator($config);

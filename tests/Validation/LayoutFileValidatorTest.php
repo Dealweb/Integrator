@@ -100,7 +100,7 @@ class LayoutFileValidatorTest extends TestCase
                 'type' => 'fixedWidthFile'
             ],
             'destination' => [
-                'type' => 'csvFile'
+                'type' => 'fixedWidthFile'
             ]
         ]);
 
