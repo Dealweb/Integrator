@@ -6,7 +6,9 @@ use Dealweb\Integrator\Exceptions\InvalidFileFormatException;
 class SourceFactory
 {
     /**
-     * @param $className
+     * Creates an adapter for the source type.
+     *
+     * @param $sourceType
      * @return SourceInterface
      * @throws InvalidFileFormatException
      */

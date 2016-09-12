@@ -42,10 +42,10 @@ class SourceFactoryTest extends TestCase
     /**
      * @test
      * @expectedException \Dealweb\Integrator\Exceptions\InvalidFileFormatException
-     * @expectedExceptionMessage No converter found for your Bla source file
+     * @expectedExceptionMessage No converter found for your Dummy source file
      */
     public function it_throws_exception_when_no_appropriate_adapter_is_provided()
     {
-        SourceFactory::create('bla');
+        SourceFactory::create('dummy');
     }
 }
