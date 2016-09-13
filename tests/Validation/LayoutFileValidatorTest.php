@@ -104,6 +104,6 @@ class LayoutFileValidatorTest extends TestCase
             ]
         ]);
 
-        $layoutFileValidator->validate();
+        $this->assertTrue($layoutFileValidator->validate());
     }
 }

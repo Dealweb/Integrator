@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Dealweb\Integrator\Source\Adapter\CsvFileInput;
 
-class CsvFileAdapterTest extends TestCase
+class CsvFileInputTest extends TestCase
 {
     /**
      * @test
