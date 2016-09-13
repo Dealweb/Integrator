@@ -7,6 +7,8 @@ source:
       position: [1, 7]
     productName:
       position: [71, 50]
+    productDescription:
+      position: [153, 432]
     normalPrice:
       position: [592, 11]
       type: number
@@ -26,7 +28,7 @@ source:
 destination:
   type: restApi
   authorization:
-    serviceUrl: "https://api.test.dev/rest/v1/auth"
+    serviceUrl: "https://api.dealweb.com.br/rest/v1/auth"
     httpMethod: POST
     expectedStatusCode: 200
     headers:
@@ -35,12 +37,12 @@ destination:
     bodyType: json
     body:
       email: api@dealweb.com.br
-      password: abc123
+      password: secret
     return:
       accessToken: "$.meta.accessData.token"
   services:
     insert-product:
-      serviceUrl: "https://api.test.dev/rest/v1/products"
+      serviceUrl: "https://api.dealweb.com.br/rest/v1/products"
       httpMethod: POST
       expectedStatusCode: 201
       headers:
@@ -53,6 +55,7 @@ destination:
           type: Product
           attributes:
             name: "{productName}"
+            metatagDescription: "{productDescription}"
             options:
               - code: "{productCode}"
                 costPrice: "{costPrice}"
