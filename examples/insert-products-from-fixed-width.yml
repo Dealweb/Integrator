@@ -42,7 +42,7 @@ destination:
     insert-product:
       serviceUrl: "https://api.test.dev/rest/v1/products"
       httpMethod: POST
-      expectedStatusCode: 200
+      expectedStatusCode: 201
       headers:
         Authorization: "Bearer {accessToken}"
         Accept: "application/vnd.api+json"
@@ -54,7 +54,7 @@ destination:
           attributes:
             name: "{productName}"
             options:
-              code: "{productCode}"
-              costPrice: "{costPrice}"
-              normalPrice: "{normalPrice}"
-              specialPrice: "{specialPrice}"
+              - code: "{productCode}"
+                costPrice: "{costPrice}"
+                normalPrice: "{normalPrice}"
+                specialPrice: "{specialPrice}"

@@ -105,8 +105,9 @@ class RestApiAdapter implements DestinationInterface
                     $config['expectedStatusCode']
                 ));
             }
+
             $this->globalFields->exchangeArray(
-                array_merge((array) $this->globalFields->getArrayCopy(), $resultArray)
+                array_merge((array) $this->globalFields->getArrayCopy(), (array) $resultArray)
             );
         } catch (ClientException $e) {
             $this->lastError = $e;
