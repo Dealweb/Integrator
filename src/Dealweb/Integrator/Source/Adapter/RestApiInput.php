@@ -6,7 +6,7 @@ use Dealweb\Integrator\Source\SourceInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
-class RestApiAdapter implements SourceInterface
+class RestApiInput implements SourceInterface
 {
     /** @var \ArrayObject */
     protected $globalFields;

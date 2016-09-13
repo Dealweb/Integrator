@@ -63,7 +63,7 @@ class LayoutFileValidatorTest extends TestCase
     {
         $layoutFileValidator = new LayoutFileValidator([
             'source' => [
-                'type' => 'gibberish'
+                'type' => 'dummy'
             ],
             'destination' => [
 

@@ -4,7 +4,7 @@ namespace Dealweb\Integrator\Source\Adapter;
 use Dealweb\Integrator\Source\SourceInterface;
 use Dealweb\Integrator\Validation\ConditionValidator;
 
-class FixedWidthFileAdapter implements SourceInterface
+class FixedWidthFileInput implements SourceInterface
 {
     public function process($config)
     {

@@ -14,7 +14,7 @@ class SourceFactory
      */
     public static function create($sourceType)
     {
-        $className = sprintf('\Dealweb\Integrator\Source\Adapter\%sAdapter', ucfirst($sourceType));
+        $className = sprintf('\Dealweb\Integrator\Source\Adapter\%sInput', ucfirst($sourceType));
 
         if (! class_exists($className)) {
             throw new InvalidFileFormatException(

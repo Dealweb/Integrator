@@ -1,0 +1,41 @@
+source:
+  type: fixedWidthFile
+  filePath: /home/caique/Downloads/input-casapronta.txt
+  ignoreFirstLine: false
+  fieldMapping:
+    productCode:
+      position: [1, 7]
+    productName:
+      position: [71, 50]
+    normalPrice:
+      position: [592, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+    specialPrice:
+      position: [604, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+    costPrice:
+      position: [652, 11]
+      type: number
+      decimalPlaces: 2
+      divisionBy: 100
+destination:
+  type: csvFile
+  filePath: /home/caique/Downloads/output-casapronta.csv
+  withHeader: true
+  delimiter: ";"
+  header:
+    - Code
+    - Name
+    - CostPrice
+    - NormalPrice
+    - Special Price
+  content:
+    - productCode
+    - productName
+    - costPrice
+    - normalPrice
+    - specialPrice

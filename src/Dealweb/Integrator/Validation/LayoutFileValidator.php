@@ -54,7 +54,7 @@ class LayoutFileValidator
         }
 
         $sourceTypeClass = sprintf(
-            '\Dealweb\Integrator\Source\Adapter\%sAdapter',
+            '\Dealweb\Integrator\Source\Adapter\%sInput',
             ucfirst($source['type'])
         );
 

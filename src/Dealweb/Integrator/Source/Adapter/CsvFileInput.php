@@ -4,7 +4,7 @@ namespace Dealweb\Integrator\Source\Adapter;
 use Dealweb\Integrator\Source\SourceInterface;
 use Dealweb\Integrator\Exceptions\InvalidFilePathException;
 
-class CsvFileAdapter implements SourceInterface
+class CsvFileInput implements SourceInterface
 {
     public function process($config)
     {

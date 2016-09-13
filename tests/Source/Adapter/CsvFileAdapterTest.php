@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Dealweb\Integrator\Source\Adapter\CsvFileAdapter;
+use Dealweb\Integrator\Source\Adapter\CsvFileInput;
 
 class CsvFileAdapterTest extends TestCase
 {
@@ -11,7 +11,7 @@ class CsvFileAdapterTest extends TestCase
     public function it_throws_exception_if_no_file_path_is_defined()
     {
         // TODO: expect exception Dealweb\Integrator\Exceptions\InvalidFilePathException
-        $csvFileAdapter = new CsvFileAdapter;
+        $csvFileAdapter = new CsvFileInput;
 
         $csvFileAdapter->process([]);
     }
