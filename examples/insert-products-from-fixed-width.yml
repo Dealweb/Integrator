@@ -7,7 +7,7 @@ source:
       position: [1, 7]
     productName:
       position: [71, 50]
-    productDescription:
+    productDetail:
       position: [153, 432]
     normalPrice:
       position: [592, 11]
@@ -55,7 +55,7 @@ destination:
           type: Product
           attributes:
             name: "{productName}"
-            metatagDescription: "{productDescription}"
+            detail: "{productDetail}"
             options:
               - code: "{productCode}"
                 costPrice: "{costPrice}"

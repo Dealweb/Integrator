@@ -31,7 +31,9 @@ class RestApiInput implements SourceInterface
     public function read($config, $mergeResult = true)
     {
         $values = $this->globalFields->getArrayCopy();
+
         $body = null;
+
         if (isset($config['body'])) {
             $body = MappingHelper::parseContent($config['body'], $values);
         }
@@ -74,13 +76,11 @@ class RestApiInput implements SourceInterface
             }
         } catch (ClientException $e) {
             $this->lastError = $e;
-            if ($e->getCode() === 404) {
-                return false;
-            }
 
             return false;
         } catch (\Exception $e) {
             $this->lastError = $e;
+
             return false;
         }
 

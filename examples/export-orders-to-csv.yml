@@ -1,0 +1,57 @@
+source:
+  type: restApi
+  authorization:
+    serviceUrl: "https://api.test.dev/rest/v1/auth"
+    httpMethod: POST
+    expectedStatusCode: 200
+    headers:
+      Accept: "application/vnd.api+json"
+      Content-Type: "application/vnd.api+json"
+    bodyType: json
+    body:
+      email: api@dealweb.com.br
+      password: abc123
+    return:
+      accessToken: "$.meta.accessData.token"
+  service:
+    serviceUrl: "https://api.test.dev/rest/v1/orders"
+    httpMethod: GET
+    expectedStatusCode: 200
+    headers:
+      Authorization: "Bearer {accessToken}"
+      Accept: "application/vnd.api+json"
+      Content-Type: "application/vnd.api+json"
+    listRoot: "$.data[*]"
+    return:
+      orderId: "$.id"
+      productCode: "$.attributes.options[0].code"
+      orderCreatedAt: "$.attributes.name"
+      orderCreatedAt: "$.attributes.createdAt"
+
+destination:
+  type: csvFile
+  filePath: /home/caique/Downloads/export-orders-test.csv
+  withHeader: true
+  delimiter: ";"
+  header:
+    - Codigo
+    - Status
+    - Endereço
+    - Cliente
+    - Total
+    - Desconto
+    - Cupom
+    - Frete
+    - Items
+    - Data do Pedido
+  content:
+    - orderId
+    - orderStatus
+    - orderAddress
+    - orderCustomer
+    - orderTotal
+    - orderDiscount
+    - orderCouponCode
+    - orderShippingTax
+    - orderItems
+    - orderCreatedAt
