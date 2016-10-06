@@ -41,7 +41,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Dealweb\\": "src/Dealweb/"
+            "Dealweb\\Integrator\\": "src/"
         }
     }
 }
