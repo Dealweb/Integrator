@@ -20,7 +20,7 @@ class RunCommand extends AbstractDealwebCommand
         $this->setName('run');
         $this->setDescription('Dealweb Integrator tool');
 
-        $this->addArgument('layout-file', null, InputArgument::REQUIRED, 'Layout file with integration details');
+        $this->addArgument('file', null, InputArgument::REQUIRED, 'Path to Configuration file for integration');
     }
 
     /**
@@ -32,22 +32,20 @@ class RunCommand extends AbstractDealwebCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $layoutFilePath = $input->getArgument('layout-file');
+        $configFilePath = $input->getArgument('file');
 
-        $this->validateFilePath($layoutFilePath);
+        $config = $this->parseConfigFile($configFilePath);
 
-        $layoutConfig = Yaml::parse(file_get_contents($layoutFilePath));
+        $this->validateConfig($config);
 
-        $this->validateConfig($layoutConfig);
-
-        $source = SourceFactory::create($layoutConfig['source']['type']);
-        $destination = DestinationFactory::create($layoutConfig['destination']['type']);
-        $destination->setConfig($layoutConfig['destination']);
+        $source = SourceFactory::create($config['source']['type']);
+        $destination = DestinationFactory::create($config['destination']['type']);
+        $destination->setConfig($config['destination']);
 
         $this->output->writeln(sprintf(
             'Starting integration with source "%s" and destination "%s"',
-            $layoutConfig['source']['type'],
-            $layoutConfig['destination']['type']
+            $config['source']['type'],
+            $config['destination']['type']
         ));
 
         $count = 0;
@@ -55,7 +53,7 @@ class RunCommand extends AbstractDealwebCommand
 
         $destination->start($output);
 
-        foreach ($source->process($layoutConfig['source']) as $fieldValues) {
+        foreach ($source->process($config['source']) as $fieldValues) {
             $count++;
             $this->startProcess(sprintf('Processing record number: %s', $count));
             if ($fieldValues === false) {
@@ -107,5 +105,18 @@ class RunCommand extends AbstractDealwebCommand
         $layoutFileValidator = new LayoutFileValidator($config);
 
         $layoutFileValidator->validate();
+    }
+
+    /**
+     * Parses the configuration file.
+     *
+     * @param $layoutFilePath
+     * @return array
+     */
+    private function parseConfigFile($layoutFilePath)
+    {
+        $this->validateFilePath($layoutFilePath);
+
+        return Yaml::parse(file_get_contents($layoutFilePath));
     }
 }
