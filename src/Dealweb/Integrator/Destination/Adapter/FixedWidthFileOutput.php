@@ -5,7 +5,7 @@ namespace Dealweb\Integrator\Destination\Adapter;
 use Dealweb\Integrator\Destination\DestinationInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class FixedWidthFileAdapter implements DestinationInterface
+class FixedWidthFileOutput implements DestinationInterface
 {
     /**
      * @param $config

@@ -5,7 +5,7 @@ use Dealweb\Integrator\Destination\DestinationInterface;
 use SimpleExcel\SimpleExcel;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class HtmlFileAdapter implements DestinationInterface
+class HtmlFileOutput implements DestinationInterface
 {
     /** @var SimpleExcel */
     protected $simpleExcel = null;

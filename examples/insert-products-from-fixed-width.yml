@@ -31,6 +31,7 @@ destination:
     serviceUrl: "https://api.dealweb.com.br/rest/v1/auth"
     httpMethod: POST
     expectedStatusCode: 200
+    stopOnFailure: true
     headers:
       Content-Type: "application/vnd.api+json"
       Accept: "application/vnd.api+json"
@@ -45,6 +46,7 @@ destination:
       serviceUrl: "https://api.dealweb.com.br/rest/v1/products"
       httpMethod: POST
       expectedStatusCode: 201
+      stopOnFailure: true
       headers:
         Authorization: "Bearer {accessToken}"
         Accept: "application/vnd.api+json"

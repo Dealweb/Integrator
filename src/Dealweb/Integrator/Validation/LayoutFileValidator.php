@@ -80,7 +80,7 @@ class LayoutFileValidator
         }
 
         $destinationTypeClass = sprintf(
-            '\Dealweb\Integrator\Destination\Adapter\%sAdapter',
+            '\Dealweb\Integrator\Destination\Adapter\%sOutput',
             ucfirst($destination['type'])
         );
 

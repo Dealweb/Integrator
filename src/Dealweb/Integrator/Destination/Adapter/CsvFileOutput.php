@@ -4,7 +4,7 @@ namespace Dealweb\Integrator\Destination\Adapter;
 use Dealweb\Integrator\Destination\DestinationInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CsvFileAdapter implements DestinationInterface
+class CsvFileOutput implements DestinationInterface
 {
     /** @var array */
     protected $config;

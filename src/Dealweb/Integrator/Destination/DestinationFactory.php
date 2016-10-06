@@ -1,19 +1,25 @@
 <?php
 namespace Dealweb\Integrator\Destination;
 
-use Dealweb\Integrator\Destination\Adapter\DummyAdapter;
+use Dealweb\Integrator\Exceptions\InvalidFileFormatException;
 
 class DestinationFactory
 {
     /**
-     * @param $className
+     * Creates an adapter for the destination type.
+     *
+     * @param $destinationType
      * @return DestinationInterface
+     * @throws InvalidFileFormatException
      */
-    public static function create($className)
+    public static function create($destinationType)
     {
-        $className = sprintf('\Dealweb\Integrator\Destination\Adapter\%sAdapter', ucfirst($className));
+        $className = sprintf('\Dealweb\Integrator\Destination\Adapter\%sOutput', ucfirst($destinationType));
+
         if (! class_exists($className)) {
-            return new DummyAdapter;
+            throw new InvalidFileFormatException(
+                sprintf("No converter found for your %s destination file", ucfirst($destinationType))
+            );
         }
 
         return new $className;

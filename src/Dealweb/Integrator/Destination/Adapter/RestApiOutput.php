@@ -2,12 +2,11 @@
 namespace Dealweb\Integrator\Destination\Adapter;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use Dealweb\Integrator\Helper\MappingHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dealweb\Integrator\Destination\DestinationInterface;
 
-class RestApiAdapter implements DestinationInterface
+class RestApiOutput implements DestinationInterface
 {
     /** @var \ArrayObject */
     protected $globalFields;
@@ -45,10 +44,7 @@ class RestApiAdapter implements DestinationInterface
             $values = $this->globalFields->getArrayCopy();
             $result = $this->call($config, $values);
 
-            if ($result === 404) {
-                return false;
-            } elseif ($result === true) {
-            } else {
+            if ($result === false) {
                 return false;
             }
         }
@@ -109,18 +105,26 @@ class RestApiAdapter implements DestinationInterface
             $this->globalFields->exchangeArray(
                 array_merge((array) $this->globalFields->getArrayCopy(), (array) $resultArray)
             );
-        } catch (ClientException $e) {
-            $this->lastError = $e;
-
-            return false;
         } catch (\Exception $e) {
             $this->lastError = $e;
+
+            if ($this->output->isVerbose()) {
+                $this->output->writeln(
+                    sprintf("<error>Process finished with error: %s</error>", $e->getMessage())
+                );
+            }
+
             return false;
         }
 
         return true;
     }
 
+    /**
+     * Finishes the destination process.
+     *
+     * @return bool
+     */
     public function finish()
     {
         return true;

@@ -1,7 +1,7 @@
 <?php
 
-use Dealweb\Integrator\Validation\LayoutFileValidator;
 use PHPUnit\Framework\TestCase;
+use Dealweb\Integrator\Validation\LayoutFileValidator;
 
 class LayoutFileValidatorTest extends TestCase
 {
