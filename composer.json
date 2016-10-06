@@ -28,10 +28,10 @@
         "vendor-dir": "vendor"
     },
     "require": {
-        "symfony/console": "3.*",
-        "monolog/monolog": "1.*",
-        "guzzlehttp/guzzle": "5.*",
-        "symfony/yaml": "2.*",
+        "symfony/console": "^3.1.5",
+        "monolog/monolog": "^1.21.0",
+        "guzzlehttp/guzzle": "^6.2.1",
+        "symfony/yaml": "^3.1.5",
         "peekmo/jsonpath": "2.x-dev",
         "faisalman/simple-excel-php": "0.3.*",
         "padraic/phar-updater": "1.*"

@@ -111,9 +111,6 @@ class RestApiAdapter implements DestinationInterface
             );
         } catch (ClientException $e) {
             $this->lastError = $e;
-            if ($e->getCode() === 404) {
-                return false;
-            }
 
             return false;
         } catch (\Exception $e) {
