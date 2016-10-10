@@ -6,7 +6,7 @@ use Dealweb\Integrator\Console\Command\RollbackCommand;
 use Dealweb\Integrator\Console\Command\SelfUpdateCommand;
 use Dealweb\Integrator\Console\Command\ValidateLayoutFileCommand;
 
-define('ROOT_DIR', sprintf('%s/../../../../', __DIR__));
+define('ROOT_DIR', sprintf('%s/../../', __DIR__));
 include_once ROOT_DIR . "/vendor/autoload.php";
 
 $application = new \Symfony\Component\Console\Application('Dealweb Integrator', '@package_version@');
