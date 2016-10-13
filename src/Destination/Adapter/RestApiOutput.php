@@ -23,22 +23,25 @@ class RestApiOutput implements DestinationInterface
     /** @var \GuzzleHttp\Client */
     protected $client;
 
+    public function __construct()
+    {
+        $this->globalFields = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
+
+        $this->client = new Client([
+            'cookies' => true,
+            'verify'  => false,
+        ]);
+    }
+
     public function setConfig($config)
     {
         $this->config = $config;
     }
 
-    public function __construct()
-    {
-        $this->globalFields = new \ArrayObject([], \ArrayObject::ARRAY_AS_PROPS);
-    }
-
     public function start(OutputInterface $output)
     {
-        $this->client = new Client([
-            'cookies' => true
-        ]);
         $this->output = $output;
+
         $this->call($this->config['authorization'], []);
     }
 
@@ -74,21 +77,20 @@ class RestApiOutput implements DestinationInterface
         $headers    = MappingHelper::parseContent($config['headers'], $values);
         $serviceUrl = MappingHelper::parseContent($config['serviceUrl'], $values);
 
+        if ($this->output->isVerbose()) {
+            $this->output->writeln(sprintf(
+                ' => Calling: [%s] %s',
+                $config['httpMethod'],
+                $serviceUrl
+            ));
+
+            $this->output->writeln(' -- Body: ' . $body);
+        }
+
         try {
-            if ($this->output->isVerbose()) {
-                $this->output->writeln(sprintf(
-                    ' => Calling: [%s] %s',
-                    $config['httpMethod'],
-                    $serviceUrl
-                ));
-
-                $this->output->writeln(' -- Body: ' . $body);
-            }
-
             $response = $this->client->request($config['httpMethod'], $serviceUrl, [
                 'headers' => $headers,
                 'body' => $body,
-                'verify' => false
             ]);
 
             $resultArray = [];

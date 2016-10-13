@@ -13,9 +13,9 @@ class SourceFactoryTest extends TestCase
      */
     public function it_creates_csv_file_input_adapter()
     {
-        $csvFileAdapter = SourceFactory::create('csvFile');
+        $csvFileInput = SourceFactory::create('csvFile');
 
-        $this->assertInstanceOf(CsvFileInput::class, $csvFileAdapter);
+        $this->assertInstanceOf(CsvFileInput::class, $csvFileInput);
     }
 
     /**
@@ -23,9 +23,9 @@ class SourceFactoryTest extends TestCase
      */
     public function it_creates_fixed_width_file_input_adapter()
     {
-        $fixedWidthFileAdapter = SourceFactory::create('fixedWidthFile');
+        $fixedWidthFileInput = SourceFactory::create('fixedWidthFile');
 
-        $this->assertInstanceOf(FixedWidthFileInput::class, $fixedWidthFileAdapter);
+        $this->assertInstanceOf(FixedWidthFileInput::class, $fixedWidthFileInput);
     }
 
     /**
@@ -33,9 +33,9 @@ class SourceFactoryTest extends TestCase
      */
     public function it_creates_rest_api_input_adapter()
     {
-        $restApiAdapter = SourceFactory::create('restApi');
+        $restApiInput = SourceFactory::create('restApi');
 
-        $this->assertInstanceOf(RestApiInput::class, $restApiAdapter);
+        $this->assertInstanceOf(RestApiInput::class, $restApiInput);
     }
 
     /**
