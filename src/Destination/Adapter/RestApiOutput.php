@@ -20,6 +20,9 @@ class RestApiOutput implements DestinationInterface
     /** @var OutputInterface */
     protected $output;
 
+    /** @var \GuzzleHttp\Client */
+    protected $client;
+
     public function setConfig($config)
     {
         $this->config = $config;
@@ -32,6 +35,9 @@ class RestApiOutput implements DestinationInterface
 
     public function start(OutputInterface $output)
     {
+        $this->client = new Client([
+            'cookies' => true
+        ]);
         $this->output = $output;
         $this->call($this->config['authorization'], []);
     }
@@ -55,6 +61,7 @@ class RestApiOutput implements DestinationInterface
     private function call($config, $values = [])
     {
         $body = null;
+        $returnConfig = (isset($config['return']))? $config['return'] : [];
 
         if (isset($config['body'])) {
             $body = MappingHelper::parseContent($config['body'], $values);
@@ -64,17 +71,8 @@ class RestApiOutput implements DestinationInterface
             $body = json_encode($body);
         }
 
-        $client     = new Client();
         $headers    = MappingHelper::parseContent($config['headers'], $values);
         $serviceUrl = MappingHelper::parseContent($config['serviceUrl'], $values);
-
-        $request    = $client->createRequest($config['httpMethod'], $serviceUrl, [
-            'headers' => $headers,
-            'body' => $body,
-            'verify' => false
-        ]);
-
-        $returnConfig = (isset($config['return']))? $config['return'] : [];
 
         try {
             if ($this->output->isVerbose()) {
@@ -87,7 +85,11 @@ class RestApiOutput implements DestinationInterface
                 $this->output->writeln(' -- Body: ' . $body);
             }
 
-            $response = $client->send($request);
+            $response = $this->client->request($config['httpMethod'], $serviceUrl, [
+                'headers' => $headers,
+                'body' => $body,
+                'verify' => false
+            ]);
 
             $resultArray = [];
             if ($config['httpMethod'] !== 'PATCH') {

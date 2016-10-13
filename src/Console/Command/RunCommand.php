@@ -32,6 +32,8 @@ class RunCommand extends AbstractDealwebCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $timeStart = microtime(true);
+
         $configFilePath = $input->getArgument('file');
 
         $config = $this->parseConfigFile($configFilePath);
@@ -71,6 +73,14 @@ class RunCommand extends AbstractDealwebCommand
         $destination->finish();
 
         $this->output->writeln(sprintf('Finished! %s record(s) processed, %s process failed', $count, $errorCount));
+
+        $timeEnd = microtime(true);
+
+        if ($this->output->isVerbose()) {
+            $executionTime = ($timeEnd - $timeStart);
+
+            $this->info(sprintf("Integration finished in %d seconds.", $executionTime));
+        }
 
         return 0;
     }
