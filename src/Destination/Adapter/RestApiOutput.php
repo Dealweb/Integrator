@@ -2,6 +2,7 @@
 namespace Dealweb\Integrator\Destination\Adapter;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Dealweb\Integrator\Helper\MappingHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dealweb\Integrator\Destination\DestinationInterface;
@@ -107,8 +108,19 @@ class RestApiOutput implements DestinationInterface
             }
 
             $this->globalFields->exchangeArray(
-                array_merge((array) $this->globalFields->getArrayCopy(), (array) $resultArray)
+                array_merge((array)$this->globalFields->getArrayCopy(), (array)$resultArray)
             );
+
+            return true;
+        } catch (ClientException $e) {
+            $this->lastError = $e;
+
+            if ($this->output->isVerbose()) {
+                $this->output->writeln("<error>We'd got an error from your request</error>");
+                $this->output->writeln(
+                    sprintf("<error>%s</error>", $e->getMessage())
+                );
+            }
         } catch (\Exception $e) {
             $this->lastError = $e;
 
@@ -117,11 +129,9 @@ class RestApiOutput implements DestinationInterface
                     sprintf("<error>Process finished with error: %s</error>", $e->getMessage())
                 );
             }
-
-            return false;
         }
 
-        return true;
+        return false;
     }
 
     /**
