@@ -94,9 +94,11 @@ class RestApiOutput implements DestinationInterface
                 'body' => $body,
             ]);
 
-            $resultArray = [];
-            if ($config['httpMethod'] !== 'PATCH') {
+            if ($config['httpMethod'] !== 'PATCH' && ! empty($returnConfig)) {
                 $resultArray = MappingHelper::parseJsonContent($response->getBody()->getContents(), $returnConfig);
+                $this->globalFields->exchangeArray(
+                    array_merge((array)$this->globalFields->getArrayCopy(), (array)$resultArray)
+                );
             }
 
             if (isset($config['expectedStatusCode']) && $response->getStatusCode() !== $config['expectedStatusCode']) {
@@ -107,9 +109,7 @@ class RestApiOutput implements DestinationInterface
                 ));
             }
 
-            $this->globalFields->exchangeArray(
-                array_merge((array)$this->globalFields->getArrayCopy(), (array)$resultArray)
-            );
+            unset($response);
 
             return true;
         } catch (ClientException $e) {
