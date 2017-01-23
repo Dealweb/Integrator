@@ -1,10 +1,11 @@
 <?php
 namespace Dealweb\Integrator\Source\Adapter;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\ClientException;
 use Dealweb\Integrator\Helper\MappingHelper;
 use Dealweb\Integrator\Source\SourceInterface;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 
 class RestApiInput implements SourceInterface
 {
@@ -43,22 +44,19 @@ class RestApiInput implements SourceInterface
         }
 
         $client = new Client();
+
         $headers = MappingHelper::parseContent($config['headers'], $values);
-        $request = $client->createRequest(
-            $config['httpMethod'],
-            MappingHelper::parseContent($config['serviceUrl'], $values),
-            [
-                'headers' => $headers,
-                'body' => $body,
-                'verify' => false
-            ]
-        );
+        $serviceUrl = MappingHelper::parseContent($config['serviceUrl'], $values);
+
+        $request = new Request($config['httpMethod'], $serviceUrl, $headers, $body);
 
         $returnConfig = (isset($config['return']))? $config['return'] : [];
         $listRootConfig = (isset($config['listRoot']))? $config['listRoot'] : null;
 
         try {
-            $response = $client->send($request);
+            $response = $client->send($request, [
+                'verify' => false,
+            ]);
             $resultArray = MappingHelper::parseJsonContent($response->getBody()->getContents(), $returnConfig, $listRootConfig);
             if (isset($config['expectedStatusCode']) && $response->getStatusCode() !== $config['expectedStatusCode']) {
                 throw new \Exception(sprintf(
