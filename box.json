@@ -17,7 +17,7 @@
         }
     ],
     "git-version": "package_version",
-    "main": "src/Dealweb/Integrator/Console/dealweb-integrator",
+    "main": "src/Console/dealweb-integrator",
     "output": "bin/dealweb-integrator.phar",
     "stub": true
 }
