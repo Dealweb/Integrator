@@ -23,7 +23,7 @@ class SelfUpdateCommand extends AbstractDealwebCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $pharUrl = 'https://Dealweb.github.io/Integrator/dealweb-integrator.phar';
+        $pharUrl = 'https://Dealweb.github.io/Integrator/bin/dealweb-integrator';
         $versionFileUrl = 'https://Dealweb.github.io/Integrator/current.version';
 
         $updater = new Updater(null, false);
