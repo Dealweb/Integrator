@@ -32,7 +32,7 @@ class CsvFileOutputTest extends TestCase
     /**
      * @test
      */
-    public function it_validates_if_output_directory_is_writable()
+    public function it_provides_an_invalid_file_path()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Directory is not writable');
@@ -49,7 +49,7 @@ class CsvFileOutputTest extends TestCase
     /**
      * @test
      */
-    public function it_checks_if_output_file_is_writable()
+    public function it_provides_a_non_writable_file()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('File is not writable');
@@ -66,13 +66,14 @@ class CsvFileOutputTest extends TestCase
     /**
      * @test
      */
-    public function it_outputs_csv_with_header()
+    public function it_outputs_the_csv_header()
     {
         $consoleOutput = new ConsoleOutput;
 
         $csvFileOutput = new CsvFileOutput;
         $csvFileOutput->setConfig([
             'filePath' => $this->fixturesPath . '/empty-csv-file.csv',
+            'withHeader' => true,
             'header' => [
                 'Name',
                 'Age',
@@ -80,5 +81,9 @@ class CsvFileOutputTest extends TestCase
             ]
         ]);
         $csvFileOutput->start($consoleOutput);
+
+        $fileContent = file_get_contents($this->fixturesPath . '/empty-csv-file.csv');
+
+        $this->assertEquals("Name,Age,Country\n", $fileContent);
     }
 }
