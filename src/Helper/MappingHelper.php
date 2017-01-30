@@ -1,4 +1,5 @@
 <?php
+
 namespace Dealweb\Integrator\Helper;
 
 use Peekmo\JsonPath\JsonStore;
@@ -9,7 +10,7 @@ class MappingHelper
     {
         $newValue = $content;
 
-        if (! is_array($values) || empty($values)) {
+        if (!is_array($values) || empty($values)) {
             return $newValue;
         }
 

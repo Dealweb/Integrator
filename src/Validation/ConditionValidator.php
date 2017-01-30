@@ -1,4 +1,5 @@
 <?php
+
 namespace Dealweb\Integrator\Validation;
 
 class ConditionValidator
@@ -7,13 +8,13 @@ class ConditionValidator
     {
         $result = $default;
 
-        if (! is_array($conditionArray)) {
+        if (!is_array($conditionArray)) {
             return $result;
         }
 
         foreach ($conditionArray as $conditionField => $conditionValue) {
             if ($values[$conditionField] !== $conditionValue) {
-                $result = ! $default;
+                $result = !$default;
             }
         }
 
@@ -22,6 +23,6 @@ class ConditionValidator
 
     public static function validateIsNotValid($conditionArray, $values)
     {
-        return ! self::validateIsValid($conditionArray, $values, false);
+        return !self::validateIsValid($conditionArray, $values, false);
     }
 }

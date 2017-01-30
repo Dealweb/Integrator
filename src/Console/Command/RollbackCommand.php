@@ -1,17 +1,11 @@
 <?php
+
 namespace Dealweb\Integrator\Console\Command;
 
-use Dealweb\Integrator\Destination\DestinationFactory;
-use Dealweb\Integrator\Source\SourceFactory;
 use Humbug\SelfUpdate\Updater;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\TableStyle;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Dealweb\Integrator\Console\AbstractDealwebCommand;
-use Symfony\Component\Yaml\Yaml;
 
 class RollbackCommand extends AbstractDealwebCommand
 {
@@ -27,7 +21,7 @@ class RollbackCommand extends AbstractDealwebCommand
 
         try {
             $result = $updater->rollback();
-            if (! $result) {
+            if (!$result) {
                 $output->writeln('Could not rollback version!');
 
                 return 1;
@@ -37,9 +31,11 @@ class RollbackCommand extends AbstractDealwebCommand
             $oldVersion = $updater->getOldVersion();
 
             $output->writeln(sprintf('Rollback from version %s to %s!', $oldVersion, $newVersion));
+
             return 0;
         } catch (\Exception $e) {
-            $output->writeln('Error: ' . $e->getMessage());
+            $output->writeln('Error: '.$e->getMessage());
+
             return 1;
         }
     }

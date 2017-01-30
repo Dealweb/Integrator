@@ -1,4 +1,5 @@
 <?php
+
 namespace Dealweb\Integrator\Console;
 
 use Symfony\Component\Console\Input\InputInterface;
@@ -41,7 +42,7 @@ abstract class AbstractDealwebCommand extends BaseCommand
      * This is mainly useful when a lot of commands extends one main command
      * where some things need to be initialized based on the input arguments and options.
      *
-     * @param InputInterface $input An InputInterface instance
+     * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -57,8 +58,9 @@ abstract class AbstractDealwebCommand extends BaseCommand
     /**
      * Write a string as information output.
      *
-     * @param  string  $string
-     * @param  null|int|string  $verbosity
+     * @param string          $string
+     * @param null|int|string $verbosity
+     *
      * @return void
      */
     public function info($string, $verbosity = null)
@@ -69,8 +71,9 @@ abstract class AbstractDealwebCommand extends BaseCommand
     /**
      * Write a string as error output.
      *
-     * @param  string  $string
-     * @param  null|int|string  $verbosity
+     * @param string          $string
+     * @param null|int|string $verbosity
+     *
      * @return void
      */
     public function error($string, $verbosity = null)
@@ -81,9 +84,10 @@ abstract class AbstractDealwebCommand extends BaseCommand
     /**
      * Write a string as standard output.
      *
-     * @param  string  $string
-     * @param  string  $style
-     * @param  null|int|string  $verbosity
+     * @param string          $string
+     * @param string          $style
+     * @param null|int|string $verbosity
+     *
      * @return void
      */
     public function line($string, $style = null, $verbosity = null)
@@ -96,14 +100,15 @@ abstract class AbstractDealwebCommand extends BaseCommand
     /**
      * Get the verbosity level in terms of Symfony's OutputInterface level.
      *
-     * @param  string|int  $level
+     * @param string|int $level
+     *
      * @return int
      */
     protected function parseVerbosity($level = null)
     {
         if (isset($this->verbosityMap[$level])) {
             $level = $this->verbosityMap[$level];
-        } elseif (! is_int($level)) {
+        } elseif (!is_int($level)) {
             $level = $this->verbosity;
         }
 
@@ -112,25 +117,25 @@ abstract class AbstractDealwebCommand extends BaseCommand
 
     public function startProcess($message)
     {
-        if (! $this->output->isVerbose()) {
-            $this->output->write(str_pad("   - " . $message, $this->columns - 15, ' ', STR_PAD_RIGHT));
+        if (!$this->output->isVerbose()) {
+            $this->output->write(str_pad('   - '.$message, $this->columns - 15, ' ', STR_PAD_RIGHT));
         }
     }
 
     public function endProcess($status = true)
     {
         if ($this->output->isVerbose()) {
-            $this->output->write(" <= ");
+            $this->output->write(' <= ');
         }
 
         if ($status) {
-            $this->output->writeln("[   <info>Ok</info>   ]");
+            $this->output->writeln('[   <info>Ok</info>   ]');
         } else {
-            $this->output->writeln("[ <error>Failed</error> ]");
+            $this->output->writeln('[ <error>Failed</error> ]');
         }
 
         if ($this->output->isVerbose()) {
-            $this->output->writeln("");
+            $this->output->writeln('');
         }
     }
 }

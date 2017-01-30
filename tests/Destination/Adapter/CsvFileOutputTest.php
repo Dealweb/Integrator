@@ -16,13 +16,13 @@ class CsvFileOutputTest extends TestCase
 
     public function tearDown()
     {
-        $toDeleteFilePath = $this->fixturesPath . '/non-existing-csv.csv';
+        $toDeleteFilePath = $this->fixturesPath.'/non-existing-csv.csv';
 
         if (file_exists($toDeleteFilePath)) {
             unlink($toDeleteFilePath);
         }
 
-        $toEmptyFilePath = $this->fixturesPath . '/empty-csv-file.csv';
+        $toEmptyFilePath = $this->fixturesPath.'/empty-csv-file.csv';
 
         if (file_exists($toEmptyFilePath)) {
             file_put_contents($toEmptyFilePath, '');
@@ -37,9 +37,9 @@ class CsvFileOutputTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Directory is not writable');
 
-        $consoleOutput = new ConsoleOutput;
+        $consoleOutput = new ConsoleOutput();
 
-        $csvFileOutput = new CsvFileOutput;
+        $csvFileOutput = new CsvFileOutput();
         $csvFileOutput->setConfig([
             'filePath' => '/Users/non-available-path.csv',
         ]);
@@ -54,11 +54,11 @@ class CsvFileOutputTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('File is not writable');
 
-        $consoleOutput = new ConsoleOutput;
+        $consoleOutput = new ConsoleOutput();
 
-        $csvFileOutput = new CsvFileOutput;
+        $csvFileOutput = new CsvFileOutput();
         $csvFileOutput->setConfig([
-            'filePath' => $this->fixturesPath . '/non-writable-file.csv',
+            'filePath' => $this->fixturesPath.'/non-writable-file.csv',
         ]);
         $csvFileOutput->start($consoleOutput);
     }
@@ -68,21 +68,21 @@ class CsvFileOutputTest extends TestCase
      */
     public function it_outputs_the_csv_header()
     {
-        $consoleOutput = new ConsoleOutput;
+        $consoleOutput = new ConsoleOutput();
 
-        $csvFileOutput = new CsvFileOutput;
+        $csvFileOutput = new CsvFileOutput();
         $csvFileOutput->setConfig([
-            'filePath' => $this->fixturesPath . '/empty-csv-file.csv',
+            'filePath'   => $this->fixturesPath.'/empty-csv-file.csv',
             'withHeader' => true,
-            'header' => [
+            'header'     => [
                 'Name',
                 'Age',
                 'Country',
-            ]
+            ],
         ]);
         $csvFileOutput->start($consoleOutput);
 
-        $fileContent = file_get_contents($this->fixturesPath . '/empty-csv-file.csv');
+        $fileContent = file_get_contents($this->fixturesPath.'/empty-csv-file.csv');
 
         $this->assertEquals("Name,Age,Country\n", $fileContent);
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Dealweb\Integrator\Validation;
 
 use Dealweb\Integrator\Exceptions\InvalidFileTypeException;
@@ -10,6 +11,7 @@ class LayoutFileValidator
 
     /**
      * LayoutFileValidator constructor.
+     *
      * @param string $content The setup content
      */
     public function __construct($content)
@@ -24,8 +26,8 @@ class LayoutFileValidator
      */
     public function validate()
     {
-        if (! isset($this->content['source']) || ! isset($this->content['destination'])) {
-            throw new InvalidFileFormatException;
+        if (!isset($this->content['source']) || !isset($this->content['destination'])) {
+            throw new InvalidFileFormatException();
         }
 
         $this->validateSource(
@@ -43,13 +45,15 @@ class LayoutFileValidator
      * Validates the source setup.
      *
      * @param $source
-     * @return bool
+     *
      * @throws InvalidFileFormatException
      * @throws InvalidFileTypeException
+     *
+     * @return bool
      */
     protected function validateSource($source)
     {
-        if (! isset($source['type'])) {
+        if (!isset($source['type'])) {
             throw new InvalidFileFormatException('A source type is required for the setup.');
         }
 
@@ -58,7 +62,7 @@ class LayoutFileValidator
             ucfirst($source['type'])
         );
 
-        if (! class_exists($sourceTypeClass)) {
+        if (!class_exists($sourceTypeClass)) {
             throw new InvalidFileTypeException(sprintf('The %s class was not found.', $sourceTypeClass));
         }
 
@@ -69,13 +73,15 @@ class LayoutFileValidator
      * Validates the destination setup.
      *
      * @param $destination
-     * @return bool
+     *
      * @throws InvalidFileFormatException
      * @throws InvalidFileTypeException
+     *
+     * @return bool
      */
     protected function validateDestination($destination)
     {
-        if (! isset($destination['type'])) {
+        if (!isset($destination['type'])) {
             throw new InvalidFileFormatException('A destination type is required for the setup.');
         }
 
@@ -84,7 +90,7 @@ class LayoutFileValidator
             ucfirst($destination['type'])
         );
 
-        if (! class_exists($destinationTypeClass)) {
+        if (!class_exists($destinationTypeClass)) {
             throw new InvalidFileTypeException(sprintf('The %s class was not found.', $destinationTypeClass));
         }
 

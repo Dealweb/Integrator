@@ -24,7 +24,7 @@ class CsvFileInputTest extends TestCase
      */
     public function it_throws_exception_if_no_file_path_is_defined()
     {
-        $csvFileAdapter = new CsvFileInput;
+        $csvFileAdapter = new CsvFileInput();
 
         $result = $csvFileAdapter->process([]);
 
@@ -39,10 +39,10 @@ class CsvFileInputTest extends TestCase
      */
     public function it_throws_exception_if_a_non_existing_file_path_if_provided()
     {
-        $csvFileAdapter = new CsvFileInput;
+        $csvFileAdapter = new CsvFileInput();
 
         $result = $csvFileAdapter->process([
-            'filePath' => 'non-existing-file.csv'
+            'filePath' => 'non-existing-file.csv',
         ]);
 
         // TODO: Figure out if there is a better way to trigger the exception.
@@ -56,10 +56,10 @@ class CsvFileInputTest extends TestCase
      */
     public function it_requires_return_option_on_configuration()
     {
-        $csvFileAdapter = new CsvFileInput;
+        $csvFileAdapter = new CsvFileInput();
 
         $result = $csvFileAdapter->process([
-            'filePath' => $this->path . '/csv-normal-example.csv',
+            'filePath' => $this->path.'/csv-normal-example.csv',
         ]);
 
         // TODO: Figure out if there is a better way to trigger the exception.
@@ -74,23 +74,23 @@ class CsvFileInputTest extends TestCase
         $csvFileInput = new CsvFileInput();
 
         $result = $csvFileInput->process([
-            'filePath' => $this->path . '/csv-normal-example.csv',
-            'return' => [
-                'name', 'age', 'country'
-            ]
+            'filePath' => $this->path.'/csv-normal-example.csv',
+            'return'   => [
+                'name', 'age', 'country',
+            ],
         ]);
 
         $this->assertEquals([
             [
-                'name' => 'John Doe',
-                'age' => '22',
-                'country' => 'Brazil'
+                'name'    => 'John Doe',
+                'age'     => '22',
+                'country' => 'Brazil',
             ],
             [
-                'name' => 'Jane Doe',
-                'age' => '33',
-                'country' => 'Canada'
-            ]
+                'name'    => 'Jane Doe',
+                'age'     => '33',
+                'country' => 'Canada',
+            ],
         ], iterator_to_array($result));
     }
 }

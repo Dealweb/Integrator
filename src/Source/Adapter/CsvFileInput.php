@@ -1,8 +1,9 @@
 <?php
+
 namespace Dealweb\Integrator\Source\Adapter;
 
-use Dealweb\Integrator\Exceptions\MissingOptionsException;
 use Dealweb\Integrator\Source\SourceInterface;
+use Dealweb\Integrator\Exceptions\MissingOptionsException;
 use Dealweb\Integrator\Exceptions\InvalidFilePathException;
 
 class CsvFileInput implements SourceInterface
@@ -14,7 +15,7 @@ class CsvFileInput implements SourceInterface
         $returningFields = isset($config['return']) ? $config['return'] : [];
         $delimiter = isset($config['delimiter']) ? $config['delimiter'] : ';';
 
-        if (! ($filePath && file_exists($filePath) && is_readable($filePath))) {
+        if (!($filePath && file_exists($filePath) && is_readable($filePath))) {
             throw new InvalidFilePathException(
                 "The filePath is not valid: {$filePath}"
             );
@@ -34,7 +35,7 @@ class CsvFileInput implements SourceInterface
             $fields = [];
 
             foreach ($returningFields as $index => $field) {
-                if (! isset($row[$index])) {
+                if (!isset($row[$index])) {
                     continue;
                 }
 

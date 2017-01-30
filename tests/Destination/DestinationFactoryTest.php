@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 use Dealweb\Integrator\Destination\DestinationFactory;
-use Dealweb\Integrator\Destination\Adapter\RestApiOutput;
 use Dealweb\Integrator\Destination\Adapter\CsvFileOutput;
+use Dealweb\Integrator\Destination\Adapter\RestApiOutput;
 use Dealweb\Integrator\Destination\Adapter\FixedWidthFileOutput;
 
 class DestinationFactoryTest extends TestCase

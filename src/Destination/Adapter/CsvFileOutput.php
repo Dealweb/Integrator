@@ -1,8 +1,9 @@
 <?php
+
 namespace Dealweb\Integrator\Destination\Adapter;
 
-use Dealweb\Integrator\Destination\DestinationInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Dealweb\Integrator\Destination\DestinationInterface;
 
 class CsvFileOutput implements DestinationInterface
 {
@@ -41,6 +42,7 @@ class CsvFileOutput implements DestinationInterface
 
     /**
      * @param array $values
+     *
      * @return bool
      */
     public function write($values = [])
@@ -51,7 +53,7 @@ class CsvFileOutput implements DestinationInterface
         foreach ($fieldsSequences as $field) {
             $csvValues[$field] = null;
 
-            if (! isset($values[$field])) {
+            if (!isset($values[$field])) {
                 continue;
             }
 
@@ -79,18 +81,19 @@ class CsvFileOutput implements DestinationInterface
      * Validates if the directory path are valid and writable.
      *
      * @param $filePath
+     *
      * @throws \Exception
      */
     private function validateFilePath($filePath)
     {
         $directoryPath = dirname($filePath);
 
-        if (! is_writable($directoryPath)) {
-            throw new \Exception("Directory is not writable");
+        if (!is_writable($directoryPath)) {
+            throw new \Exception('Directory is not writable');
         }
 
-        if (file_exists($filePath) && ! is_writable($filePath)) {
-            throw new \Exception("File is not writable");
+        if (file_exists($filePath) && !is_writable($filePath)) {
+            throw new \Exception('File is not writable');
         }
     }
 
@@ -99,11 +102,12 @@ class CsvFileOutput implements DestinationInterface
      *
      * @param $header
      * @param $delimiter
+     *
      * @throws \Exception
      */
     private function addCsvHeader($header, $delimiter)
     {
-        if (! is_array($header)) {
+        if (!is_array($header)) {
             throw new \Exception('CSV file is not valid');
         }
 

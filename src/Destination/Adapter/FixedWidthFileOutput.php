@@ -2,13 +2,14 @@
 
 namespace Dealweb\Integrator\Destination\Adapter;
 
-use Dealweb\Integrator\Destination\DestinationInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Dealweb\Integrator\Destination\DestinationInterface;
 
 class FixedWidthFileOutput implements DestinationInterface
 {
     /**
      * @param $config
+     *
      * @return bool
      */
     public function setConfig($config)
@@ -18,6 +19,7 @@ class FixedWidthFileOutput implements DestinationInterface
 
     /**
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     public function start(OutputInterface $output)
@@ -27,6 +29,7 @@ class FixedWidthFileOutput implements DestinationInterface
 
     /**
      * @param $values
+     *
      * @return mixed
      */
     public function write($values)

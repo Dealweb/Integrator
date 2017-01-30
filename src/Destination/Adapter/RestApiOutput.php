@@ -1,4 +1,5 @@
 <?php
+
 namespace Dealweb\Integrator\Destination\Adapter;
 
 use GuzzleHttp\Client;
@@ -65,17 +66,17 @@ class RestApiOutput implements DestinationInterface
     private function call($config, $values = [])
     {
         $body = null;
-        $returnConfig = (isset($config['return']))? $config['return'] : [];
+        $returnConfig = (isset($config['return'])) ? $config['return'] : [];
 
         if (isset($config['body'])) {
             $body = MappingHelper::parseContent($config['body'], $values);
         }
 
-        if (! isset($config['bodyType']) || $config['bodyType'] == 'json') {
+        if (!isset($config['bodyType']) || $config['bodyType'] == 'json') {
             $body = json_encode($body);
         }
 
-        $headers    = MappingHelper::parseContent($config['headers'], $values);
+        $headers = MappingHelper::parseContent($config['headers'], $values);
         $serviceUrl = MappingHelper::parseContent($config['serviceUrl'], $values);
 
         if ($this->output->isVerbose()) {
@@ -85,19 +86,19 @@ class RestApiOutput implements DestinationInterface
                 $serviceUrl
             ));
 
-            $this->output->writeln(' -- Body: ' . $body);
+            $this->output->writeln(' -- Body: '.$body);
         }
 
         try {
             $response = $this->client->request($config['httpMethod'], $serviceUrl, [
                 'headers' => $headers,
-                'body' => $body,
+                'body'    => $body,
             ]);
 
-            if ($config['httpMethod'] !== 'PATCH' && ! empty($returnConfig)) {
+            if ($config['httpMethod'] !== 'PATCH' && !empty($returnConfig)) {
                 $resultArray = MappingHelper::parseJsonContent($response->getBody()->getContents(), $returnConfig);
                 $this->globalFields->exchangeArray(
-                    array_merge((array)$this->globalFields->getArrayCopy(), (array)$resultArray)
+                    array_merge((array) $this->globalFields->getArrayCopy(), (array) $resultArray)
                 );
             }
 
@@ -118,7 +119,7 @@ class RestApiOutput implements DestinationInterface
             if ($this->output->isVerbose()) {
                 $this->output->writeln("<error>We'd got an error from your request</error>");
                 $this->output->writeln(
-                    sprintf("<error>%s</error>", $e->getMessage())
+                    sprintf('<error>%s</error>', $e->getMessage())
                 );
             }
         } catch (\Exception $e) {
@@ -126,7 +127,7 @@ class RestApiOutput implements DestinationInterface
 
             if ($this->output->isVerbose()) {
                 $this->output->writeln(
-                    sprintf("<error>Process finished with error: %s</error>", $e->getMessage())
+                    sprintf('<error>Process finished with error: %s</error>', $e->getMessage())
                 );
             }
         }

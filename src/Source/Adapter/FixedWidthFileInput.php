@@ -1,4 +1,5 @@
 <?php
+
 namespace Dealweb\Integrator\Source\Adapter;
 
 use Dealweb\Integrator\Source\SourceInterface;
@@ -9,7 +10,7 @@ class FixedWidthFileInput implements SourceInterface
     public function process($config)
     {
         $filePath = $config['filePath'];
-        if (! file_exists($filePath)) {
+        if (!file_exists($filePath)) {
             yield false;
         }
 
@@ -28,7 +29,7 @@ class FixedWidthFileInput implements SourceInterface
                 $fieldValue = trim(substr($row, $fieldPosition[0] - 1, $fieldPosition[1]));
 
                 if (isset($mappingData['type']) && $mappingData['type'] == 'number') {
-                    if (isset ($mappingData['divisionBy'])) {
+                    if (isset($mappingData['divisionBy'])) {
                         $fieldValue = $fieldValue / (int) $mappingData['divisionBy'];
                     }
 
@@ -42,7 +43,7 @@ class FixedWidthFileInput implements SourceInterface
 
             if (isset($config['condition'])) {
                 $condition = $config['condition'];
-                if (isset($condition['validIf']) && ! ConditionValidator::validateIsValid($condition['validIf'], $fieldsValues)) {
+                if (isset($condition['validIf']) && !ConditionValidator::validateIsValid($condition['validIf'], $fieldsValues)) {
                     continue;
                 }
 

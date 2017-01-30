@@ -1,11 +1,11 @@
 <?php
+
 namespace Dealweb\Integrator\Destination;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Interface DestinationInterface
- * @package Dealweb\Integrator\Destination
+ * Interface DestinationInterface.
  */
 interface DestinationInterface
 {
@@ -13,6 +13,7 @@ interface DestinationInterface
      * Sets the configuration for the destination service.
      *
      * @param $config
+     *
      * @return bool
      */
     public function setConfig($config);
@@ -21,6 +22,7 @@ interface DestinationInterface
      * Starts the destination service.
      *
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     public function start(OutputInterface $output);
@@ -29,6 +31,7 @@ interface DestinationInterface
      * Writes the load to the destination service.
      *
      * @param $values
+     *
      * @return mixed
      */
     public function write($values);

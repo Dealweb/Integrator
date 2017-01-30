@@ -15,7 +15,7 @@ class LayoutFileValidatorTest extends TestCase
             // no source setup
             'destination' => [
 
-            ]
+            ],
         ]);
 
         $layoutFileValidator->validate();
@@ -49,7 +49,7 @@ class LayoutFileValidatorTest extends TestCase
             ],
             'destination' => [
 
-            ]
+            ],
         ]);
 
         $layoutFileValidator->validate();
@@ -63,11 +63,11 @@ class LayoutFileValidatorTest extends TestCase
     {
         $layoutFileValidator = new LayoutFileValidator([
             'source' => [
-                'type' => 'dummy'
+                'type' => 'dummy',
             ],
             'destination' => [
 
-            ]
+            ],
         ]);
 
         $layoutFileValidator->validate();
@@ -80,11 +80,11 @@ class LayoutFileValidatorTest extends TestCase
     {
         $layoutFileValidator = new LayoutFileValidator([
             'source' => [
-                'type' => 'csvFile'
+                'type' => 'csvFile',
             ],
             'destination' => [
-                'type' => 'csvFile'
-            ]
+                'type' => 'csvFile',
+            ],
         ]);
 
         $this->assertTrue($layoutFileValidator->validate());
@@ -97,11 +97,11 @@ class LayoutFileValidatorTest extends TestCase
     {
         $layoutFileValidator = new LayoutFileValidator([
             'source' => [
-                'type' => 'fixedWidthFile'
+                'type' => 'fixedWidthFile',
             ],
             'destination' => [
-                'type' => 'fixedWidthFile'
-            ]
+                'type' => 'fixedWidthFile',
+            ],
         ]);
 
         $this->assertTrue($layoutFileValidator->validate());

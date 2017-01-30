@@ -1,4 +1,5 @@
 <?php
+
 namespace Dealweb\Integrator\Source\Adapter;
 
 use GuzzleHttp\Client;
@@ -39,7 +40,7 @@ class RestApiInput implements SourceInterface
             $body = MappingHelper::parseContent($config['body'], $values);
         }
 
-        if (! isset($config['bodyType']) || $config['bodyType'] == 'json') {
+        if (!isset($config['bodyType']) || $config['bodyType'] == 'json') {
             $body = json_encode($body);
         }
 
@@ -50,8 +51,8 @@ class RestApiInput implements SourceInterface
 
         $request = new Request($config['httpMethod'], $serviceUrl, $headers, $body);
 
-        $returnConfig = (isset($config['return']))? $config['return'] : [];
-        $listRootConfig = (isset($config['listRoot']))? $config['listRoot'] : null;
+        $returnConfig = (isset($config['return'])) ? $config['return'] : [];
+        $listRootConfig = (isset($config['listRoot'])) ? $config['listRoot'] : null;
 
         try {
             $response = $client->send($request, [

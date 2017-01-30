@@ -1,9 +1,10 @@
 <?php
+
 namespace Dealweb\Integrator\Destination\Adapter;
 
-use Dealweb\Integrator\Destination\DestinationInterface;
 use SimpleExcel\SimpleExcel;
 use Symfony\Component\Console\Output\OutputInterface;
+use Dealweb\Integrator\Destination\DestinationInterface;
 
 class ExcelFileOutput implements DestinationInterface
 {
@@ -39,7 +40,7 @@ class ExcelFileOutput implements DestinationInterface
         foreach ($fieldsSequences as $field) {
             $xmlValues[$field] = null;
 
-            if (! isset($values[$field])) {
+            if (!isset($values[$field])) {
                 continue;
             }
 
@@ -47,6 +48,7 @@ class ExcelFileOutput implements DestinationInterface
         }
 
         $this->simpleExcel->writer->addRow($xmlValues);
+
         return true;
     }
 
