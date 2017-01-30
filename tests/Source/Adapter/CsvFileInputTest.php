@@ -59,7 +59,7 @@ class CsvFileInputTest extends TestCase
         $csvFileAdapter = new CsvFileInput;
 
         $result = $csvFileAdapter->process([
-            'filePath' => $this->path . '/csv_normal_example.csv',
+            'filePath' => $this->path . '/csv-normal-example.csv',
         ]);
 
         // TODO: Figure out if there is a better way to trigger the exception.
@@ -74,7 +74,7 @@ class CsvFileInputTest extends TestCase
         $csvFileInput = new CsvFileInput();
 
         $result = $csvFileInput->process([
-            'filePath' => $this->path . '/csv_normal_example.csv',
+            'filePath' => $this->path . '/csv-normal-example.csv',
             'return' => [
                 'name', 'age', 'country'
             ]
