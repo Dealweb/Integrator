@@ -23,6 +23,11 @@ class CsvFileOutput implements DestinationInterface
     {
         $this->output = $output;
         $filePath = $this->config['filePath'];
+
+        if (! is_writable($filePath)) {
+            throw new \Exception("File path is not writable");
+        }
+
         $this->fileHandler = fopen($filePath, 'w+');
 
         if ($this->config['withHeader'] === true) {
