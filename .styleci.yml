@@ -1,0 +1,6 @@
+preset: recommended
+
+risky: false
+
+enabled:
+  - length_ordered_imports
