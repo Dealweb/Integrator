@@ -25,6 +25,6 @@ class ValidateLayoutFileCommand extends AbstractDealwebCommand
             $output->writeln('<error>The requested file was not found or is not accessible.</error>');
         }
 
-        $validator = new LayoutFileValidator(file_get_contents($file));
+        new LayoutFileValidator(file_get_contents($file));
     }
 }
