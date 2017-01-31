@@ -25,6 +25,6 @@ class SourceFactory
             );
         }
 
-        return new $className();
+        return new $className;
     }
 }
