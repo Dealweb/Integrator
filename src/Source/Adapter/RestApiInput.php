@@ -27,7 +27,7 @@ class RestApiInput implements SourceInterface
             return self::read($config['service'], false);
         }
 
-        return false;
+        throw new \Exception('Your authentication failed.');
     }
 
     public function read($config, $mergeResult = true)
