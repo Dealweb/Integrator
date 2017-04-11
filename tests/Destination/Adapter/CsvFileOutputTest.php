@@ -51,6 +51,9 @@ class CsvFileOutputTest extends TestCase
      */
     public function it_provides_a_non_writable_file()
     {
+        $noWritableFilePath = realpath($this->fixturesPath.'/non-writable-file.csv');
+
+        chmod($noWritableFilePath, 0444);
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('File is not writable');
 
@@ -58,7 +61,7 @@ class CsvFileOutputTest extends TestCase
 
         $csvFileOutput = new CsvFileOutput();
         $csvFileOutput->setConfig([
-            'filePath' => $this->fixturesPath.'/non-writable-file.csv',
+            'filePath' => $noWritableFilePath,
         ]);
         $csvFileOutput->start($consoleOutput);
     }
