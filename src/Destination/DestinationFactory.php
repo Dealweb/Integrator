@@ -25,6 +25,6 @@ class DestinationFactory
             );
         }
 
-        return new $className;
+        return new $className();
     }
 }
